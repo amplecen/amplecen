@@ -25,7 +25,7 @@
   /* Typography */
   --font-display: 'Fraunces', Georgia, serif;
   --font-sans:    'Inter', 'DM Sans', system-ui, sans-serif;
-  --font-mono:    'DM Mono', monospace;
+  --font-mono:    'DM Sans', monospace;
 
   /* Spacing */
   --space-1: 4px;
@@ -39,6 +39,19 @@
   --space-24: 96px;
 
   --max-width: 1100px;
+
+  /* Responsive Breakpoints */
+  --mobile: 768px;
+  --tablet: 1024px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --space-8: 24px;
+    --space-12: 32px;
+    --space-16: 48px;
+    --space-24: 64px;
+  }
 }
 
 html { scroll-behavior: smooth; }
@@ -94,4 +107,74 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 1s cubic-bezier(0.25, 0, 0, 1) both;
+}
+
+/* Responsive Utilities */
+.section-container {
+  padding: 96px 64px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .section-container {
+    padding: 80px 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    padding: 64px 24px;
+  }
+
+  .mobile-stack {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .mobile-show {
+    display: block !important;
+  }
+
+  .mobile-center {
+    text-align: center;
+  }
+
+  .mobile-px-small {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  /* Specific mobile adjustments */
+  .hero-grid {
+    padding-top: 100px !important;
+    padding-bottom: 60px !important;
+    min-height: auto !important;
+    gap: 40px !important;
+  }
+}
+
+/* Mobile Nav Styles */
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--warm-white);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  animation: fadeIn 0.4s ease;
+}
+
+.mobile-nav-link {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--midnight);
+  text-decoration: none;
 }

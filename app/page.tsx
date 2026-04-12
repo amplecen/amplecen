@@ -21,6 +21,7 @@ function LogoMark({ size = 36, dark = false }: { size?: number; dark?: boolean }
 /* ─── Nav ─── */
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48)
@@ -28,93 +29,146 @@ function Nav() {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
+  const navLinks = ['Manifesto', 'Products', 'Team', 'Contact']
+
   return (
-    <nav style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0,
-      zIndex: 100,
-      padding: '18px 48px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      transition: 'all 0.35s ease',
-      background: scrolled ? 'rgba(245,240,232,0.92)' : 'transparent',
-      borderBottom: scrolled ? '1px solid rgba(45,75,110,0.08)' : '1px solid transparent',
-      backdropFilter: scrolled ? 'blur(16px)' : 'none',
-    }}>
-      <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-        <LogoMark size={32} />
-        <span style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 18,
-          fontWeight: 400,
-          color: 'var(--midnight)',
-          letterSpacing: '-0.2px',
-        }}>Amplecen</span>
-      </a>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        {['Manifesto', 'Products', 'Team', 'Contact'].map(item => (
+    <>
+      <nav style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        zIndex: 100,
+        padding: '18px 48px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        transition: 'all 0.35s ease',
+        background: scrolled ? 'rgba(245,240,232,0.92)' : 'transparent',
+        borderBottom: scrolled ? '1px solid rgba(45,75,110,0.08)' : '1px solid transparent',
+        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+      }} className="mobile-px-small">
+        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+          <LogoMark size={32} />
+          <span style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 18,
+            fontWeight: 400,
+            color: 'var(--midnight)',
+            letterSpacing: '-0.2px',
+          }}>Amplecen</span>
+        </a>
+
+        {/* Desktop Links */}
+        <div className="mobile-hide" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {navLinks.map(item => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 13,
+                fontWeight: 400,
+                color: 'var(--midnight)',
+                textDecoration: 'none',
+                padding: '6px 14px',
+                borderRadius: 999,
+                transition: 'all 0.2s ease',
+                opacity: 0.65,
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.opacity = '1'
+                e.currentTarget.style.background = 'rgba(45,75,110,0.07)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.opacity = '0.65'
+                e.currentTarget.style.background = 'transparent'
+              }}
+            >{item}</a>
+          ))}
           <a
-            key={item}
-            href={`#${item.toLowerCase()}`}
+            href="https://rhythme.amplecen.com"
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: 13,
-              fontWeight: 400,
-              color: 'var(--midnight)',
+              fontWeight: 500,
+              color: '#fff',
               textDecoration: 'none',
-              padding: '6px 14px',
+              padding: '8px 20px',
               borderRadius: 999,
-              transition: 'all 0.2s ease',
-              opacity: 0.65,
+              background: 'var(--midnight)',
+              marginLeft: 8,
+              transition: 'background 0.2s ease',
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.opacity = '1'
-              e.currentTarget.style.background = 'rgba(45,75,110,0.07)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.opacity = '0.65'
-              e.currentTarget.style.background = 'transparent'
-            }}
-          >{item}</a>
-        ))}
-        <a
-          href="https://rhythme.amplecen.com"
+            onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
+          >Try Rhythmé</a>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button
+          className="mobile-show"
+          onClick={() => setMobileMenuOpen(true)}
           style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 13,
-            fontWeight: 500,
-            color: '#fff',
-            textDecoration: 'none',
-            padding: '8px 20px',
-            borderRadius: 999,
-            background: 'var(--midnight)',
-            marginLeft: 8,
-            transition: 'background 0.2s ease',
+            display: 'none', // Overridden by media query in globals.css (if I add it) or I can use a state/class
+            background: 'none',
+            border: 'none',
+            color: 'var(--midnight)',
+            cursor: 'pointer',
+            padding: 4,
           }}
-          onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
-          onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
-        >Try Rhythmé</a>
-      </div>
-    </nav>
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="4" y1="8" x2="20" y2="8" />
+            <line x1="4" y1="16" x2="20" y2="16" />
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-overlay">
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              position: 'absolute',
+              top: 24, right: 24,
+              background: 'none',
+              border: 'none',
+              color: 'var(--midnight)',
+              fontSize: 32,
+              cursor: 'pointer'
+            }}
+          >&times;</button>
+          {navLinks.map(item => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="mobile-nav-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >{item}</a>
+          ))}
+          <a
+            href="https://rhythme.amplecen.com"
+            className="mobile-nav-link"
+            style={{ color: 'var(--ember)' }}
+            onClick={() => setMobileMenuOpen(false)}
+          >Try Rhythmé</a>
+        </div>
+      )}
+    </>
   )
 }
 
 /* ─── Hero ─── */
 function Hero() {
   return (
-    <section style={{
+    <section className="section-container hero-grid mobile-stack" style={{
       minHeight: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       alignItems: 'center',
-      padding: '120px 64px 80px',
-      maxWidth: 'var(--max-width)',
-      margin: '0 auto',
-      gap: 64,
     }}>
       {/* Left — text */}
-      <div>
+      <div className="mobile-center">
         <div className="animate-fade-up" style={{ animationDelay: '0.1s', marginBottom: 20 }}>
           <span className="eyebrow">Behavior Intelligence Organization</span>
         </div>
@@ -152,6 +206,8 @@ function Hero() {
           display: 'flex',
           gap: 12,
           alignItems: 'center',
+          justifyContent: 'inherit',
+          flexWrap: 'wrap',
         }}>
           <a
             href="#products"
@@ -295,7 +351,7 @@ function Divider({ accent = false }: { accent?: boolean }) {
       background: accent
         ? 'linear-gradient(to right, transparent, rgba(232,133,90,0.3), transparent)'
         : 'rgba(45,75,110,0.1)',
-      margin: '0 48px',
+      margin: '0 var(--space-8)',
     }} />
   )
 }
@@ -310,13 +366,13 @@ function Manifesto() {
   ]
 
   return (
-    <section id="manifesto" style={{ padding: '96px 64px', background: 'var(--warm-white-2)' }}>
-      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+    <section id="manifesto" className="section-container" style={{ background: 'var(--warm-white-2)' }}>
+      <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
           <span className="eyebrow">Manifesto</span>
           <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+        <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
           {beliefs.map(({ num, text }) => (
             <div
               key={num}
@@ -364,14 +420,14 @@ function Manifesto() {
 /* ─── Products ─── */
 function Products() {
   return (
-    <section id="products" style={{ padding: '96px 64px', maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+    <section id="products" className="section-container">
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
         <span className="eyebrow">Products</span>
         <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
       </div>
 
       {/* Rhythmé card */}
-      <div style={{
+      <div className="mobile-stack" style={{
         display: 'grid',
         gridTemplateColumns: '1fr 380px',
         gap: 24,
@@ -512,22 +568,24 @@ function Products() {
 /* ─── Team ─── */
 function Team() {
   return (
-    <section id="team" style={{ background: 'var(--warm-white-2)', padding: '96px 64px' }}>
-      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+    <section id="team" className="section-container mobile-px-small" style={{ background: 'var(--warm-white-2)' }}>
+      <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
           <span className="eyebrow">Founder</span>
           <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
         </div>
-        <div style={{
+        <div className="mobile-stack" style={{
           display: 'grid',
           gridTemplateColumns: '280px 1fr',
           gap: 48,
           alignItems: 'start',
         }}>
           {/* Avatar */}
-          <div style={{
-            width: 280,
-            height: 280,
+          <div className="mobile-center" style={{
+            width: '100%',
+            maxWidth: 280,
+            aspectRatio: '1/1',
+            margin: '0 auto',
             background: 'var(--midnight)',
             borderRadius: 20,
             display: 'flex',
@@ -542,20 +600,21 @@ function Team() {
               fontWeight: 300,
               color: 'rgba(245,240,232,0.12)',
               userSelect: 'none',
-            }}>V</span>
+            }}>A</span>
             <div style={{
               position: 'absolute',
               bottom: 0, left: 0, right: 0,
               padding: '20px 24px',
+              textAlign: 'left',
               background: 'linear-gradient(to top, rgba(30,51,80,0.95), transparent)',
             }}>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#F5F0E8' }}>Vincent</p>
+              <p style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#F5F0E8' }}>Anonymous Identity</p>
               <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.75, marginTop: 4 }}>Founder</p>
             </div>
           </div>
 
           {/* Bio */}
-          <div style={{ paddingTop: 16 }}>
+          <div className="mobile-center" style={{ paddingTop: 16 }}>
             <p style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(20px, 2.5vw, 28px)',
@@ -567,13 +626,13 @@ function Team() {
             }}>
               "Building Amplecen from a conviction that software for human behavior deserves the same depth of thinking as the humans it serves."
             </p>
-            <div style={{ display: 'flex', gap: 32 }}>
+            <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'inherit' }}>
               {[
                 { label: 'Role', value: 'Operations & Engineering' },
                 { label: 'Focus', value: 'Full-stack & ML' },
                 { label: 'Stage', value: 'Founder-led' },
               ].map(({ label, value }) => (
-                <div key={label}>
+                <div key={label} style={{ textAlign: 'left' }}>
                   <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.65, marginBottom: 6 }}>{label}</p>
                   <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 400, color: 'var(--midnight)' }}>{value}</p>
                 </div>
@@ -593,14 +652,14 @@ function Contact() {
   const [sent, setSent] = useState(false)
 
   return (
-    <section id="contact" style={{ padding: '96px 64px' }}>
-      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+    <section id="contact" className="section-container">
+      <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
           <span className="eyebrow">Contact</span>
           <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+        <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
           <div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
@@ -714,19 +773,20 @@ function Contact() {
 /* ─── Footer ─── */
 function Footer() {
   return (
-    <footer style={{
+    <footer className="section-container mobile-stack" style={{
       borderTop: '1px solid rgba(45,75,110,0.08)',
-      padding: '28px 64px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       background: 'var(--warm-white-2)',
+      flexWrap: 'wrap',
+      gap: 24,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <LogoMark size={24} />
         <span style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--midnight)', opacity: 0.6 }}>Amplecen</span>
       </div>
-      <div style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: 28, alignItems: 'center', flexWrap: 'wrap' }}>
         <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3 }}>© 2025 Amplecen</span>
         <a href="https://rhythme.amplecen.com" style={{
           fontFamily: 'var(--font-sans)',
