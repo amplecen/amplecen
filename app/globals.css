@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&family=DM+Serif+Display:ital@0;1&display=swap');
+/* Fonts loaded via next/font in fonts.ts — no external @import needed */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -22,10 +22,10 @@
   --sand:          #B8956A;
   --sage:          #3D6B52;
 
-  /* Typography */
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-sans:    'Inter', 'DM Sans', system-ui, sans-serif;
-  --font-mono:    'DM Sans', monospace;
+  /* Typography — composed from next/font CSS variables */
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans:    var(--font-dm-sans), system-ui, sans-serif;
+  --font-mono:    var(--font-dm-mono), monospace;
 
   /* Spacing */
   --space-1: 4px;
@@ -60,8 +60,8 @@ body {
   background: var(--warm-white);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 17px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -120,6 +120,33 @@ body {
   .section-container {
     padding: 80px 48px;
   }
+
+  /* Tablet: reduce nav padding */
+  .amp-nav {
+    padding: 18px 32px !important;
+  }
+
+  /* Tablet: products grid stacks */
+  .amp-product-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tablet: team grid stacks */
+  .amp-team-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .amp-team-photo {
+    width: 200px !important;
+    height: 220px !important;
+    margin: 0 auto;
+  }
+
+  .amp-team-meta {
+    flex-wrap: wrap;
+    gap: 20px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -130,6 +157,11 @@ body {
   .mobile-stack {
     grid-template-columns: 1fr !important;
     gap: 48px !important;
+  }
+
+  .mobile-stack-tight {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
   }
 
   .mobile-hide {
@@ -149,12 +181,89 @@ body {
     padding-right: 24px !important;
   }
 
-  /* Specific mobile adjustments */
-  .hero-grid {
+  /* Nav */
+  .amp-nav {
+    padding: 14px 20px !important;
+  }
+
+  /* Hero */
+  .amp-hero {
     padding-top: 100px !important;
     padding-bottom: 60px !important;
     min-height: auto !important;
     gap: 40px !important;
+  }
+
+  /* Sections: responsive padding */
+  .amp-section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+
+  /* Divider */
+  .amp-divider {
+    margin-left: 24px !important;
+    margin-right: 24px !important;
+  }
+
+  /* Products */
+  .amp-product-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .amp-product-card {
+    padding: 36px 28px !important;
+    min-height: auto !important;
+  }
+
+  .amp-product-more {
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center;
+  }
+
+  .amp-product-more a {
+    margin-left: 0 !important;
+  }
+
+  /* Team */
+  .amp-team-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .amp-team-photo {
+    width: 100% !important;
+    max-width: 280px !important;
+    height: 240px !important;
+    margin: 0 auto;
+  }
+
+  .amp-team-meta {
+    flex-direction: column;
+    gap: 16px !important;
+  }
+
+  /* Contact */
+  .amp-contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+
+  /* Footer */
+  .amp-footer {
+    flex-direction: column !important;
+    gap: 16px !important;
+    text-align: center;
+    padding: 24px !important;
+  }
+
+  .amp-footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px !important;
   }
 }
 
@@ -198,8 +307,8 @@ body {
   --rl-border-hover: rgba(240, 237, 232, 0.15);
   --rl-glass:        rgba(13, 15, 20, 0.85);
   --rl-glass-border: rgba(240, 237, 232, 0.06);
-  --rl-font-display: 'DM Serif Display', Georgia, serif;
-  --rl-font-body:    'DM Sans', system-ui, sans-serif;
+  --rl-font-display: var(--font-dm-serif-display), Georgia, serif;
+  --rl-font-body:    var(--font-dm-sans), system-ui, sans-serif;
   --rl-max-width:    1200px;
 }
 
@@ -255,4 +364,40 @@ body {
   .rl-hero-visual   { display: none !important; }
   .rl-email-form    { flex-direction: column; }
   .rl-hero-grid     { grid-template-columns: 1fr !important; }
+
+  /* Rhythmé nav */
+  .rl-nav {
+    padding: 14px 20px !important;
+  }
+
+  /* Rhythmé sections */
+  .rl-section {
+    padding: 64px 24px !important;
+  }
+
+  /* Rhythmé footer */
+  .rl-footer {
+    flex-direction: column !important;
+    gap: 20px !important;
+    text-align: center;
+    padding: 32px 24px !important;
+  }
+
+  .rl-footer > div:last-child {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .rl-nav {
+    padding: 18px 32px !important;
+  }
+
+  .rl-section {
+    padding: 80px 40px !important;
+  }
+
+  .rl-privacy-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

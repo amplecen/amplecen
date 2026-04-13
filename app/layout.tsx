@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { fraunces, dmSans, dmMono, dmSerifDisplay } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -48,7 +49,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${dmSans.variable} ${dmMono.variable} ${dmSerifDisplay.variable}`}
+    >
       <head>
         <script
           type="application/ld+json"
@@ -67,12 +71,6 @@ export default function RootLayout({
               ],
             }),
           }}
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
         />
       </head>
       <body>{children}</body>

@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowRight, Brain, Database, EyeOff, Focus, LineChart, ShieldCheck, SunMoon, Menu, X, Activity } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect, useState, useRef, useCallback } from 'react'
 
 /* ─── Scroll Reveal Hook ─── */
@@ -61,8 +63,8 @@ const heading = (size: string): React.CSSProperties => ({
   fontFamily: V('font-display'),
   fontSize: size,
   color: V('text'),
-  lineHeight: 1.15,
-  letterSpacing: '-0.5px',
+  lineHeight: 1.12,
+  letterSpacing: '-0.6px',
   fontWeight: 400,
 })
 
@@ -79,23 +81,17 @@ const label: React.CSSProperties = {
 
 const body: React.CSSProperties = {
   color: V('text-muted'),
-  fontSize: 17,
+  fontSize: 18,
   lineHeight: 1.8,
-  fontWeight: 300,
+  fontWeight: 400,
 }
 
-/* ─── SVG Icons ─── */
-const ico = { width: 22, height: 22, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
-function IconDashboard() { return <svg {...ico}><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M3 9h18" /><path d="M9 21V9" /></svg> }
-function IconTask() { return <svg {...ico}><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" /></svg> }
-function IconHabit() { return <svg {...ico}><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" /></svg> }
-function IconJournal() { return <svg {...ico}><path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" /><path d="M8 7h8M8 11h6" /></svg> }
-function IconFocus() { return <svg {...ico}><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> }
-function IconWeek() { return <svg {...ico}><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg> }
+/* ─── Shared Styles Drop-in ─── */
+const iconProps = { size: 24, strokeWidth: 1.5, color: 'currentColor' }
 
 /* ─── Section styles ─── */
 const section: React.CSSProperties = {
-  padding: '120px 64px',
+  padding: '128px 64px',
   maxWidth: 1200,
   margin: '0 auto',
 }
@@ -119,7 +115,7 @@ function RhythmeNav() {
 
   return (
     <>
-      <nav style={{
+      <nav className="rl-nav" style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         padding: '18px 48px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -157,9 +153,7 @@ function RhythmeNav() {
           style={{ display: 'none', background: 'none', border: 'none', color: V('text'), cursor: 'pointer', padding: 4 }}
           aria-label="Open menu"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="4" y1="8" x2="20" y2="8" /><line x1="4" y1="16" x2="20" y2="16" />
-          </svg>
+          <Menu size={24} />
         </button>
       </nav>
 
@@ -171,9 +165,11 @@ function RhythmeNav() {
         }}>
           <button
             onClick={() => setMobileOpen(false)}
-            style={{ position: 'absolute', top: 20, right: 24, background: 'none', border: 'none', color: V('text'), fontSize: 28, cursor: 'pointer' }}
+            style={{ position: 'absolute', top: 20, right: 24, background: 'none', border: 'none', color: V('text'), cursor: 'pointer', padding: 4 }}
             aria-label="Close menu"
-          >&times;</button>
+          >
+            <X size={28} />
+          </button>
           {links.map(l => (
             <a key={l.label} href={l.href} onClick={() => setMobileOpen(false)} style={{
               fontFamily: V('font-display'), fontSize: 28, color: V('text'),
@@ -193,7 +189,7 @@ function RhythmeNav() {
 /* ─── Section 2: Hero ─── */
 function HeroSection() {
   return (
-    <section style={{ ...section, minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: 120 }}>
+    <section className="rl-section" style={{ ...section, minHeight: '100vh', display: 'flex', alignItems: 'center', paddingTop: 120 }}>
       <div className="rl-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center', width: '100%' }}>
         <div>
           <Reveal>
@@ -208,21 +204,21 @@ function HeroSection() {
           </Reveal>
           <Reveal>
             <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-              <a href="#early-access" className="rl-btn-primary" style={{
+              <Link href="#early-access" className="rl-btn-primary" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 10,
                 padding: '16px 32px', background: V('accent'), color: V('bg'),
                 fontFamily: V('font-body'), fontSize: 14, fontWeight: 500,
                 textDecoration: 'none', borderRadius: 999, transition: 'all 0.25s ease',
               }}>
                 Get Early Access — It's Free
-                <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              </a>
-              <a href="#how-it-works" className="rl-btn-secondary" style={{
+                <ArrowRight size={14} strokeWidth={1.5} />
+              </Link>
+              <Link href="#how-it-works" className="rl-btn-secondary" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 6,
                 padding: '16px 24px', color: V('text-muted'),
                 fontFamily: V('font-body'), fontSize: 14, fontWeight: 400,
                 textDecoration: 'none', transition: 'color 0.2s',
-              }}>See how it works ↓</a>
+              }}>See how it works ↓</Link>
             </div>
           </Reveal>
           <Reveal>
@@ -297,7 +293,7 @@ function HeroSection() {
 /* ─── Section 3: Problem Statement ─── */
 function ProblemSection() {
   return (
-    <section style={{ ...section, background: V('bg-surface'), maxWidth: 'none' }}>
+    <section className="rl-section" style={{ ...section, background: V('bg-surface'), maxWidth: 'none' }}>
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         <Reveal><p style={label}>The Problem</p></Reveal>
         <Reveal>
@@ -326,12 +322,12 @@ function ProblemSection() {
 /* ─── Section 4: Features ─── */
 function FeaturesSection() {
   const features = [
-    { icon: <IconDashboard />, title: 'Your Day at a Glance', body: 'Open Rhythmé and know exactly what today looks like — tasks prioritized, habits tracked, mood noted. No scrolling through five apps. One calm view, under ten seconds.' },
-    { icon: <IconTask />, title: "Tasks That Don't Bury You", body: "Add tasks with priorities, due dates, and tags. Filter down to what matters today. No 200-item backlogs. No guilt from what's left undone." },
-    { icon: <IconHabit />, title: 'Habits That Actually Stick', body: "One tap to log. Streaks to keep you honest. A heatmap to show your real consistency over time. And a quiet nudge when a habit's at risk — never a lecture." },
-    { icon: <IconJournal />, title: "A Journal That's Truly Yours", body: "Write freely. Your entries are encrypted end-to-end — we can't read them, and neither can anyone else. Tag your mood, see patterns over time." },
-    { icon: <IconFocus />, title: 'Focus Without Friction', body: 'Pomodoro-style focus sessions, tied to a specific task if you want. No social features. No background noise AI. Just you and the work.' },
-    { icon: <IconWeek />, title: 'Your Week in Perspective', body: "Plan your week. Review it honestly. See simple connections between your mood, habits, and output. Not magic — just clarity." },
+    { icon: <LineChart {...iconProps} />, title: "Behavioral Momentum", body: "Don't measure completion. Measure consistency. Rhythmé visualizes the hidden streaks that form the foundation of your success." },
+    { icon: <Brain {...iconProps} />, title: "Pattern Recognition", body: "Lightweight ML models identify what distracts you, when you focus best, and what precedes a deep work session." },
+    { icon: <Focus {...iconProps} />, title: "Deep Work Metrics", body: "We track the quality of your focus, not just the duration. Understand your cognitive load and peak performance hours." },
+    { icon: <SunMoon {...iconProps} />, title: "Energy Lifecycle", body: "Input your mood and sleep. Watch Rhythmé correlate your physical state directly with your output potential." },
+    { icon: <Activity {...iconProps} />, title: "Friction Logging", body: "Quick-log the moment you get blocked. Over time, Rhythmé reveals the systemic friction points in your workflow." },
+    { icon: <ShieldCheck {...iconProps} />, title: "Your Week in Perspective", body: "Plan your week. Review it honestly. See simple connections between your mood, habits, and output. Not magic — just clarity." },
   ]
 
   const cardIcon: React.CSSProperties = {
@@ -342,7 +338,7 @@ function FeaturesSection() {
   }
 
   return (
-    <section id="features" style={section}>
+    <section id="features" className="rl-section" style={section}>
       <Reveal><p style={label}>What Rhythmé gives you</p></Reveal>
       <Reveal><h2 style={{ ...heading('clamp(32px, 4vw, 48px)'), marginBottom: 56 }}>Everything you need. Nothing you don't.</h2></Reveal>
 
@@ -354,8 +350,8 @@ function FeaturesSection() {
               borderRadius: 20, padding: 36, transition: 'all 0.3s ease',
             }}>
               <div style={cardIcon}>{f.icon}</div>
-              <h3 style={{ fontFamily: V('font-display'), fontSize: 20, color: V('text'), marginBottom: 10, fontWeight: 400 }}>{f.title}</h3>
-              <p style={{ fontSize: 15, color: V('text-muted'), lineHeight: 1.7, fontWeight: 300 }}>{f.body}</p>
+              <h3 style={{ fontFamily: V('font-display'), fontSize: 22, color: V('text'), marginBottom: 10, fontWeight: 400 }}>{f.title}</h3>
+              <p style={{ fontSize: 16, color: V('text-muted'), lineHeight: 1.7, fontWeight: 400 }}>{f.body}</p>
             </div>
           </div>
         ))}
@@ -374,7 +370,7 @@ function DifferentiatorSection() {
   })
 
   return (
-    <section style={{ ...section, textAlign: 'center' }}>
+    <section className="rl-section" style={{ ...section, textAlign: 'center' }}>
       <Reveal><p style={label}>Why Rhythmé is different</p></Reveal>
       <Reveal>
         <h2 style={{ ...heading('clamp(28px, 3.5vw, 44px)'), maxWidth: 700, margin: '0 auto 32px' }}>
@@ -409,13 +405,13 @@ function DifferentiatorSection() {
 /* ─── Section 6: Privacy ─── */
 function PrivacySection() {
   const pillars = [
-    { icon: <svg {...ico} width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 12l2 2 4-4" /></svg>, title: 'Encrypted Journals', body: "Your journal entries are encrypted on your device before they ever touch our servers. We cannot read them. Full stop." },
-    { icon: <svg {...ico} width="28" height="28"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94" /><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19" /><line x1="1" y1="1" x2="23" y2="23" /></svg>, title: 'No Data Mining', body: "Mood data is stored as metadata only. We never sell, analyze, or monetize your emotional patterns." },
-    { icon: <svg {...ico} width="28" height="28"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /></svg>, title: 'Delete Anytime', body: "One button. Your entire account and all associated data, permanently removed. GDPR-compliant by design." },
+    { icon: <EyeOff size={28} strokeWidth={1.5} />, title: 'Encrypted Journals', body: "Your journal entries are encrypted on your device before they ever touch our servers. We cannot read them. Full stop." },
+    { icon: <ShieldCheck size={28} strokeWidth={1.5} />, title: 'No Data Mining', body: "Mood data is stored as metadata only. We never sell, analyze, or monetize your emotional patterns." },
+    { icon: <Database size={28} strokeWidth={1.5} />, title: 'Delete Anytime', body: "One button. Your entire account and all associated data, permanently removed. GDPR-compliant by design." },
   ]
 
   return (
-    <section style={section}>
+    <section className="rl-section" style={section}>
       <Reveal><p style={label}>Your data is yours</p></Reveal>
       <Reveal><h2 style={{ ...heading('clamp(28px, 3.5vw, 44px)'), marginBottom: 56 }}>We built privacy in. Not bolted on.</h2></Reveal>
 
@@ -428,8 +424,8 @@ function PrivacySection() {
               borderRadius: 20, transition: 'border-color 0.3s ease',
             }}>
               <div style={{ marginBottom: 20, display: 'flex', justifyContent: 'center', color: V('accent') }}>{p.icon}</div>
-              <h3 style={{ fontFamily: V('font-display'), fontSize: 20, color: V('text'), marginBottom: 12, fontWeight: 400 }}>{p.title}</h3>
-              <p style={{ fontSize: 14, color: V('text-muted'), lineHeight: 1.7, fontWeight: 300 }}>{p.body}</p>
+              <h3 style={{ fontFamily: V('font-display'), fontSize: 22, color: V('text'), marginBottom: 12, fontWeight: 400 }}>{p.title}</h3>
+              <p style={{ fontSize: 15, color: V('text-muted'), lineHeight: 1.7, fontWeight: 400 }}>{p.body}</p>
             </div>
           </div>
         ))}
@@ -449,7 +445,7 @@ function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" style={{ ...section, background: V('bg-surface'), maxWidth: 'none' }}>
+    <section id="how-it-works" className="rl-section" style={{ ...section, background: V('bg-surface'), maxWidth: 'none' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <Reveal><p style={label}>Getting Started</p></Reveal>
         <Reveal><h2 style={{ ...heading('clamp(28px, 3.5vw, 44px)'), marginBottom: 64 }}>From zero to clarity in three minutes.</h2></Reveal>
@@ -463,8 +459,8 @@ function HowItWorksSection() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 margin: '0 auto 16px', fontFamily: V('font-display'), fontSize: 16, color: V('accent'),
               }}>{s.num}</div>
-              <h3 style={{ fontFamily: V('font-display'), fontSize: 17, color: V('text'), marginBottom: 8, fontWeight: 400 }}>{s.title}</h3>
-              <p style={{ fontSize: 14, color: V('text-muted'), lineHeight: 1.65, fontWeight: 300 }}>{s.desc}</p>
+              <h3 style={{ fontFamily: V('font-display'), fontSize: 18, color: V('text'), marginBottom: 8, fontWeight: 400 }}>{s.title}</h3>
+              <p style={{ fontSize: 15, color: V('text-muted'), lineHeight: 1.65, fontWeight: 400 }}>{s.desc}</p>
             </div>
           ))}
         </StaggerReveal>
@@ -558,6 +554,7 @@ function RhythmeFooter() {
     <footer className="rl-footer" style={{
       borderTop: `1px solid ${V('border')}`,
       padding: '48px 64px', maxWidth: 1200, margin: '0 auto',
+      marginBottom: 64,
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       flexWrap: 'wrap', gap: 24,
     }}>
@@ -566,11 +563,11 @@ function RhythmeFooter() {
         <p style={{ fontSize: 13, color: V('text-dim'), fontWeight: 300, fontStyle: 'italic' }}>Productivity that knows how you feel.</p>
       </div>
       <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
-        <a href="/privacy" className="rl-footer-link" style={linkStyle}>Privacy Policy</a>
-        <a href="/terms" className="rl-footer-link" style={linkStyle}>Terms</a>
-        <a href="/#contact" className="rl-footer-link" style={linkStyle}>Contact</a>
+        <Link href="/privacy" className="rl-footer-link" style={linkStyle}>Privacy Policy</Link>
+        <Link href="/terms" className="rl-footer-link" style={linkStyle}>Terms</Link>
+        <Link href="/#contact" className="rl-footer-link" style={linkStyle}>Contact</Link>
         <span style={{ fontSize: 12, color: V('text-dim'), opacity: 0.5 }}>·</span>
-        <a href="/" className="rl-footer-link" style={{ ...linkStyle, color: V('text-muted') }}>A product by Amplecen</a>
+        <Link href="/" className="rl-footer-link" style={{ ...linkStyle, color: V('text-muted') }}>A product by Amplecen</Link>
         <span style={{ fontSize: 11, color: V('text-dim'), opacity: 0.4 }}>© {new Date().getFullYear()} Amplecen</span>
       </div>
     </footer>
@@ -622,8 +619,8 @@ export default function RhythmeLandingPage() {
   return (
     <div className="rl-page" style={{
       background: V('bg'), color: V('text'),
-      fontFamily: V('font-body'), fontWeight: 300,
-      fontSize: 16, lineHeight: 1.7,
+      fontFamily: V('font-body'), fontWeight: 400,
+      fontSize: 17, lineHeight: 1.7,
       WebkitFontSmoothing: 'antialiased', overflowX: 'hidden',
     }}>
       <RhythmeNav />

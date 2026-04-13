@@ -1,27 +1,27 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Menu, X, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 /* ─── Logomark ─── */
-function LogoMark({ size = 36, dark = false }: { size?: number; dark?: boolean }) {
+function LogoMark({ size = 36 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 44 44" fill="none">
-      <rect width="44" height="44" rx="10" fill={dark ? '#2D4B6E' : '#2D4B6E'} />
+      <rect width="44" height="44" rx="10" fill="#2D4B6E" />
       <circle cx="22" cy="14" r="6" fill="#E8855A" />
-      <circle cx="11" cy="32" r="4.5" fill={dark ? 'rgba(245,240,232,0.6)' : 'rgba(245,240,232,0.75)'} />
-      <circle cx="33" cy="32" r="4.5" fill={dark ? 'rgba(245,240,232,0.6)' : 'rgba(245,240,232,0.75)'} />
+      <circle cx="11" cy="32" r="4.5" fill="rgba(245,240,232,0.75)" />
+      <circle cx="33" cy="32" r="4.5" fill="rgba(245,240,232,0.75)" />
       <line x1="22" y1="20" x2="11" y2="27.5" stroke="rgba(245,240,232,0.5)" strokeWidth="1.5" strokeLinecap="round" />
       <line x1="22" y1="20" x2="33" y2="27.5" stroke="rgba(245,240,232,0.5)" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   )
 }
 
-
-
 /* ─── Nav ─── */
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48)
@@ -29,24 +29,24 @@ function Nav() {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  const navLinks = ['Manifesto', 'Products', 'Team', 'Contact']
+  const navItems = ['Manifesto', 'Products', 'Team', 'Contact']
 
   return (
     <>
-      <nav style={{
+      <nav className="amp-nav" style={{
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 100,
-        padding: '18px 48px',
+        padding: '18px 56px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         transition: 'all 0.35s ease',
-        background: scrolled ? 'rgba(245,240,232,0.92)' : 'transparent',
+        background: scrolled ? 'rgba(245,240,232,0.94)' : 'transparent',
         borderBottom: scrolled ? '1px solid rgba(45,75,110,0.08)' : '1px solid transparent',
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
-      }} className="mobile-px-small">
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+      }}>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
           <LogoMark size={32} />
           <span style={{
             fontFamily: 'var(--font-display)',
@@ -55,103 +55,83 @@ function Nav() {
             color: 'var(--midnight)',
             letterSpacing: '-0.2px',
           }}>Amplecen</span>
-        </a>
+        </Link>
 
-        {/* Desktop Links */}
-        <div className="mobile-hide" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {navLinks.map(item => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: 13,
-                fontWeight: 400,
-                color: 'var(--midnight)',
-                textDecoration: 'none',
-                padding: '6px 14px',
-                borderRadius: 999,
-                transition: 'all 0.2s ease',
-                opacity: 0.65,
-              }}
+        {/* Desktop links */}
+        <div className="mobile-hide" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {navItems.map(item => (
+            <Link key={item} href={`#${item.toLowerCase()}`} style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 13,
+              fontWeight: 400,
+              color: 'var(--midnight)',
+              textDecoration: 'none',
+              padding: '6px 14px',
+              borderRadius: 999,
+              transition: 'all 0.2s ease',
+              opacity: 0.6,
+            }}
               onMouseEnter={e => {
                 e.currentTarget.style.opacity = '1'
                 e.currentTarget.style.background = 'rgba(45,75,110,0.07)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.opacity = '0.65'
+                e.currentTarget.style.opacity = '0.6'
                 e.currentTarget.style.background = 'transparent'
               }}
-            >{item}</a>
+            >{item}</Link>
           ))}
-          <a
-            href="https://rhythme.amplecen.com"
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 13,
-              fontWeight: 500,
-              color: '#fff',
-              textDecoration: 'none',
-              padding: '8px 20px',
-              borderRadius: 999,
-              background: 'var(--midnight)',
-              marginLeft: 8,
-              transition: 'background 0.2s ease',
-            }}
+          <Link href="/rhythme" style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 13,
+            fontWeight: 500,
+            color: '#fff',
+            textDecoration: 'none',
+            padding: '8px 20px',
+            borderRadius: 999,
+            background: 'var(--midnight)',
+            marginLeft: 8,
+            transition: 'background 0.2s ease',
+          }}
             onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
             onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
-          >Try Rhythmé</a>
+          >Try Rhythmé</Link>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile hamburger */}
         <button
           className="mobile-show"
-          onClick={() => setMobileMenuOpen(true)}
-          style={{
-            display: 'none', // Overridden by media query in globals.css (if I add it) or I can use a state/class
-            background: 'none',
-            border: 'none',
-            color: 'var(--midnight)',
-            cursor: 'pointer',
-            padding: 4,
-          }}
+          onClick={() => setMobileOpen(true)}
+          style={{ display: 'none', background: 'none', border: 'none', color: 'var(--midnight)', cursor: 'pointer', padding: 4 }}
+          aria-label="Open menu"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="4" y1="8" x2="20" y2="8" />
-            <line x1="4" y1="16" x2="20" y2="16" />
-          </svg>
+          <Menu size={24} />
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
+      {/* Mobile overlay */}
+      {mobileOpen && (
         <div className="mobile-nav-overlay">
           <button
-            onClick={() => setMobileMenuOpen(false)}
-            style={{
-              position: 'absolute',
-              top: 24, right: 24,
-              background: 'none',
-              border: 'none',
-              color: 'var(--midnight)',
-              fontSize: 32,
-              cursor: 'pointer'
-            }}
-          >&times;</button>
-          {navLinks.map(item => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="mobile-nav-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >{item}</a>
+            onClick={() => setMobileOpen(false)}
+            style={{ position: 'absolute', top: 20, right: 24, background: 'none', border: 'none', color: 'var(--midnight)', cursor: 'pointer', padding: 4 }}
+            aria-label="Close menu"
+          >
+            <X size={28} />
+          </button>
+          {navItems.map(item => (
+            <Link key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileOpen(false)} className="mobile-nav-link">{item}</Link>
           ))}
-          <a
-            href="https://rhythme.amplecen.com"
-            className="mobile-nav-link"
-            style={{ color: 'var(--ember)' }}
-            onClick={() => setMobileMenuOpen(false)}
-          >Try Rhythmé</a>
+          <Link
+            href="/rhythme"
+            onClick={() => setMobileOpen(false)}
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 28,
+              color: 'var(--ember)',
+              textDecoration: 'none',
+            }}
+          >Try Rhythmé ↗</Link>
         </div>
       )}
     </>
@@ -161,183 +141,170 @@ function Nav() {
 /* ─── Hero ─── */
 function Hero() {
   return (
-    <section className="section-container hero-grid mobile-stack" style={{
+    <section className="amp-hero mobile-stack" style={{
       minHeight: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       alignItems: 'center',
+      padding: '120px 64px 80px',
+      maxWidth: 'var(--max-width)',
+      margin: '0 auto',
+      gap: 72,
     }}>
-      {/* Left — text */}
-      <div className="mobile-center">
-        <div className="animate-fade-up" style={{ animationDelay: '0.1s', marginBottom: 20 }}>
-          <span className="eyebrow">Behavior Intelligence Organization</span>
+      <div>
+        <div className="animate-fade-up" style={{ animationDelay: '0.1s', marginBottom: 24 }}>
+          <span style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            fontFamily: 'var(--font-sans)',
+            fontSize: 11,
+            fontWeight: 500,
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+            color: 'var(--ember)',
+            background: 'rgba(232,133,90,0.1)',
+            padding: '5px 12px',
+            borderRadius: 999,
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--ember)', display: 'inline-block' }} />
+            Building for the distracted generation
+          </span>
         </div>
 
         <h1 className="animate-fade-up" style={{
           animationDelay: '0.2s',
           fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(44px, 5.5vw, 72px)',
-          fontWeight: 400,
+          fontSize: 'clamp(46px, 5.5vw, 74px)',
+          fontWeight: 600,
           color: 'var(--midnight)',
           lineHeight: 1.08,
-          letterSpacing: '-1px',
-          marginBottom: 24,
+          letterSpacing: '-1.5px',
+          marginBottom: 28,
         }}>
-          Tools that<br />
-          <em style={{ fontStyle: 'italic', color: 'var(--ember)' }}>understand</em><br />
-          people.
+          Your attention<br />
+          is worth<br />
+          <em style={{ color: 'var(--ember)', fontStyle: 'italic' }}>fighting for.</em>
         </h1>
 
         <p className="animate-fade-up" style={{
           animationDelay: '0.32s',
-          fontSize: 17,
+          fontSize: 18,
           color: 'var(--midnight)',
-          opacity: 0.65,
-          lineHeight: 1.75,
-          maxWidth: 420,
+          opacity: 0.6,
+          lineHeight: 1.8,
+          maxWidth: 460,
           marginBottom: 40,
-          fontWeight: 300,
+          fontWeight: 400,
         }}>
-          Amplecen builds software at the intersection of human behavior, intelligence, and emotional awareness — starting with Rhythmé.
+          We find where people are losing — their focus, their time, their sense of momentum — and build products that give it back. Quietly. Without adding to the noise.
         </p>
 
         <div className="animate-fade-up" style={{
-          animationDelay: '0.44s',
+          animationDelay: '0.42s',
           display: 'flex',
           gap: 12,
           alignItems: 'center',
-          justifyContent: 'inherit',
           flexWrap: 'wrap',
         }}>
-          <a
-            href="#products"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '14px 28px',
-              background: 'var(--midnight)',
-              color: '#fff',
-              fontFamily: 'var(--font-sans)',
-              fontSize: 14,
-              fontWeight: 500,
-              textDecoration: 'none',
-              borderRadius: 999,
-              transition: 'background 0.2s ease',
-            }}
+          <Link href="#products" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '14px 28px',
+            background: 'var(--midnight)',
+            color: '#fff',
+            fontFamily: 'var(--font-sans)',
+            fontSize: 14,
+            fontWeight: 500,
+            textDecoration: 'none',
+            borderRadius: 999,
+            transition: 'background 0.2s ease',
+          }}
             onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
             onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
           >
-            Learn more
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-              <path d="M1 5h12M8 1l5 4-5 4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
-          <a
-            href="#manifesto"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              padding: '14px 24px',
-              color: 'var(--midnight)',
-              fontFamily: 'var(--font-sans)',
-              fontSize: 14,
-              fontWeight: 400,
-              textDecoration: 'none',
-              opacity: 0.55,
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '0.55')}
-          >
-            Read our manifesto →
-          </a>
+            See what we're building
+            <ArrowRight size={16} />
+          </Link>
+          <Link href="#manifesto" style={{
+            fontSize: 14,
+            color: 'var(--midnight)',
+            textDecoration: 'none',
+            opacity: 0.45,
+            transition: 'opacity 0.2s',
+            fontFamily: 'var(--font-sans)',
+          }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '0.45')}
+          >Read our thinking →</Link>
         </div>
       </div>
 
-      {/* Right — visual card stack */}
-      <div className="animate-fade-in" style={{ animationDelay: '0.5s', position: 'relative', height: 440 }}>
-        {/* Background card */}
-        <div style={{
-          position: 'absolute',
-          top: 24, right: 0,
-          width: '88%', height: '85%',
-          background: 'var(--midnight)',
-          borderRadius: 20,
-          opacity: 0.08,
-        }} />
-        {/* Mid card */}
-        <div style={{
-          position: 'absolute',
-          top: 12, right: 12,
-          width: '90%', height: '88%',
-          background: 'var(--haze)',
-          borderRadius: 20,
-          opacity: 0.18,
-        }} />
-        {/* Main card */}
-        <div style={{
-          position: 'absolute',
-          top: 0, right: 24,
-          width: '92%', height: '92%',
-          background: 'var(--midnight)',
-          borderRadius: 20,
-          padding: '36px 36px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}>
-          {/* Card header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <div>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 400, color: '#F5F0E8', marginBottom: 4 }}>Rhythmé</p>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.8 }}>Behavior Intelligence</p>
+      {/* Right — stat cards */}
+      <div className="animate-fade-in" style={{ animationDelay: '0.5s', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        {[
+          {
+            stat: '47',
+            unit: 'times',
+            label: 'The average person checks their phone per day',
+            color: 'var(--ember)',
+            bg: 'rgba(232,133,90,0.07)',
+          },
+          {
+            stat: '23',
+            unit: 'minutes',
+            label: 'To refocus after a single interruption',
+            color: 'var(--midnight)',
+            bg: 'rgba(45,75,110,0.06)',
+          },
+          {
+            stat: '2.5',
+            unit: 'hours',
+            label: 'Lost to distraction every working day',
+            color: '#7EB898',
+            bg: 'rgba(126,184,152,0.08)',
+          },
+          {
+            stat: '0',
+            unit: 'tools',
+            label: 'Built specifically to fix this — until now',
+            color: 'var(--ember)',
+            bg: 'rgba(232,133,90,0.05)',
+          },
+        ].map(({ stat, unit, label, color, bg }) => (
+          <div key={label} style={{
+            background: bg,
+            borderRadius: 16,
+            padding: '24px 22px',
+            border: '1px solid rgba(45,75,110,0.06)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 5, marginBottom: 8 }}>
+              <span style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 44,
+                fontWeight: 600,
+                color,
+                lineHeight: 1,
+              }}>{stat}</span>
+              <span style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 11,
+                color,
+                opacity: 0.7,
+                fontWeight: 500,
+              }}>{unit}</span>
             </div>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(232,133,90,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--ember)' }} />
-            </div>
+            <p style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 13,
+              color: 'var(--midnight)',
+              opacity: 0.55,
+              lineHeight: 1.55,
+              fontWeight: 300,
+            }}>{label}</p>
           </div>
-
-          {/* Fake chart bars */}
-          <div>
-            <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end', height: 80, marginBottom: 16 }}>
-              {[40, 65, 48, 72, 58, 84, 62, 90, 70, 78].map((h, i) => (
-                <div key={i} style={{
-                  flex: 1,
-                  height: `${h}%`,
-                  background: i === 9 ? 'var(--ember)' : 'rgba(143,175,201,0.25)',
-                  borderRadius: '3px 3px 0 0',
-                  transition: 'all 0.3s ease',
-                }} />
-              ))}
-            </div>
-            <div style={{ height: 0.5, background: 'rgba(143,175,201,0.2)', marginBottom: 16 }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              {['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W'].map((d, i) => (
-                <span key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(143,175,201,0.45)' }}>{d}</span>
-              ))}
-            </div>
-          </div>
-
-          {/* Metrics */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
-            {[
-              { label: 'Momentum', value: '↑ 12%' },
-              { label: 'Streak', value: '14 days' },
-              { label: 'Focus', value: '3.2 hrs' },
-            ].map(({ label, value }) => (
-              <div key={label} style={{
-                background: 'rgba(143,175,201,0.08)',
-                borderRadius: 10,
-                padding: '10px 12px',
-              }}>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: 9, color: 'rgba(143,175,201,0.55)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 4 }}>{label}</p>
-                <p style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 400, color: '#F5F0E8' }}>{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   )
@@ -346,12 +313,12 @@ function Hero() {
 /* ─── Divider ─── */
 function Divider({ accent = false }: { accent?: boolean }) {
   return (
-    <div style={{
+    <div className="amp-divider" style={{
       height: 1,
       background: accent
-        ? 'linear-gradient(to right, transparent, rgba(232,133,90,0.3), transparent)'
-        : 'rgba(45,75,110,0.1)',
-      margin: '0 var(--space-8)',
+        ? 'linear-gradient(to right, transparent, rgba(232,133,90,0.25), transparent)'
+        : 'rgba(45,75,110,0.08)',
+      margin: '0 56px',
     }} />
   )
 }
@@ -359,56 +326,83 @@ function Divider({ accent = false }: { accent?: boolean }) {
 /* ─── Manifesto ─── */
 function Manifesto() {
   const beliefs = [
-    { num: '01', text: 'The tools shaping human behavior should be held to the same standard of craft as the ideas they serve.' },
-    { num: '02', text: 'Intelligence is not the speed of thought. It is the quality of attention paid.' },
-    { num: '03', text: 'Behavior is not a problem to be optimized. It is a pattern to be understood.' },
-    { num: '04', text: 'We build from that premise — slowly, deliberately, one product at a time.' },
+    {
+      num: '01',
+      headline: 'The age of distraction is engineered.',
+      body: 'Every app, platform, and notification is designed to capture attention — and hold it. We didn\'t drift into distraction. We were pulled there, deliberately, by systems optimized for engagement over human wellbeing.',
+    },
+    {
+      num: '02',
+      headline: 'Most productivity tools make it worse.',
+      body: 'They add more surfaces, more dashboards, more places to check. They mistake busyness for progress. They optimize your output without ever asking whether you\'re okay. We think that\'s a design failure.',
+    },
+    {
+      num: '03',
+      headline: 'Real tools understand people first.',
+      body: 'Not just their tasks. Their patterns. Their energy. The emotional context that shapes whether a good intention becomes a real action. Software that knows this builds differently.',
+    },
+    {
+      num: '04',
+      headline: 'We find the pain. We build the answer.',
+      body: 'Every product Amplecen builds starts with a genuine human problem — something people are losing in the noise of modern life. Then we make one thing that gives it back, as quietly and completely as we can.',
+    },
   ]
 
   return (
-    <section id="manifesto" className="section-container" style={{ background: 'var(--warm-white-2)' }}>
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
-          <span className="eyebrow">Manifesto</span>
-          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
+    <section id="manifesto" className="amp-section" style={{ padding: '96px 64px', background: 'var(--warm-white-2)' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 64 }}>
+          <span className="eyebrow">Our thinking</span>
+          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.18)' }} />
         </div>
-        <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-          {beliefs.map(({ num, text }) => (
+
+        <div className="mobile-stack-tight" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+          {beliefs.map(({ num, headline, body }) => (
             <div
               key={num}
               style={{
-                padding: '28px 32px',
+                padding: '32px 36px',
                 background: 'var(--warm-white)',
-                borderRadius: 16,
-                border: '1px solid rgba(45,75,110,0.07)',
-                transition: 'border-color 0.2s, transform 0.2s',
+                borderRadius: 18,
+                border: '1px solid rgba(45,75,110,0.06)',
+                transition: 'border-color 0.2s, transform 0.25s',
                 cursor: 'default',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(232,133,90,0.25)'
-                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.borderColor = 'rgba(232,133,90,0.2)'
+                e.currentTarget.style.transform = 'translateY(-3px)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(45,75,110,0.07)'
+                e.currentTarget.style.borderColor = 'rgba(45,75,110,0.06)'
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
               <span style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 11,
+                fontSize: 10,
                 color: 'var(--ember)',
-                opacity: 0.6,
+                opacity: 0.55,
                 display: 'block',
                 marginBottom: 14,
+                letterSpacing: '1px',
               }}>{num}</span>
-              <p style={{
+              <h3 style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 18,
-                fontWeight: 300,
+                fontSize: 21,
+                fontWeight: 500,
                 color: 'var(--midnight)',
-                lineHeight: 1.65,
-                fontStyle: 'italic',
-              }}>{text}</p>
+                lineHeight: 1.35,
+                marginBottom: 14,
+                letterSpacing: '-0.3px',
+              }}>{headline}</h3>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 15,
+                fontWeight: 400,
+                color: 'var(--midnight)',
+                opacity: 0.6,
+                lineHeight: 1.75,
+              }}>{body}</p>
             </div>
           ))}
         </div>
@@ -420,115 +414,127 @@ function Manifesto() {
 /* ─── Products ─── */
 function Products() {
   return (
-    <section id="products" className="section-container">
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
+    <section id="products" className="amp-section" style={{ padding: '96px 64px', maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 64 }}>
         <span className="eyebrow">Products</span>
-        <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
+        <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.18)' }} />
       </div>
 
-      {/* Rhythmé card */}
-      <div className="mobile-stack" style={{
+      {/* Rhythmé */}
+      <div className="amp-product-grid" style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 380px',
-        gap: 24,
+        gridTemplateColumns: '1fr 360px',
+        gap: 20,
         marginBottom: 20,
       }}>
-        <div style={{
+        <div className="amp-product-card" style={{
           background: 'var(--midnight)',
-          borderRadius: 20,
-          padding: '48px 52px',
+          borderRadius: 22,
+          padding: '52px 56px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          minHeight: 360,
+          minHeight: 380,
+          position: 'relative',
+          overflow: 'hidden',
         }}>
+          {/* Background texture */}
+          <div style={{
+            position: 'absolute',
+            top: -60, right: -60,
+            width: 260, height: 260,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(232,133,90,0.12) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+
           <div>
-            <span style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 10,
-              fontWeight: 500,
-              letterSpacing: '2.5px',
-              textTransform: 'uppercase',
-              color: 'var(--ember)',
-              opacity: 0.8,
-              display: 'block',
-              marginBottom: 16,
-            }}>Flagship · Early Access</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+              <span style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                color: 'var(--ember)',
+                opacity: 0.85,
+              }}>Flagship · Behavior Intelligence</span>
+              <span style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 10,
+                background: 'rgba(232,133,90,0.15)',
+                color: 'var(--ember)',
+                padding: '3px 10px',
+                borderRadius: 999,
+              }}>In development</span>
+            </div>
+
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(40px, 4vw, 56px)',
-              fontWeight: 400,
+              fontSize: 'clamp(44px, 5vw, 62px)',
+              fontWeight: 600,
               color: '#F5F0E8',
-              letterSpacing: '-0.5px',
-              lineHeight: 1.1,
+              letterSpacing: '-0.8px',
+              lineHeight: 1.08,
               marginBottom: 20,
             }}>Rhythmé</h2>
+
             <p style={{
-              fontSize: 16,
+              fontFamily: 'var(--font-sans)',
+              fontSize: 17,
               color: 'var(--haze)',
               lineHeight: 1.75,
               opacity: 0.8,
-              maxWidth: 400,
-              fontWeight: 300,
+              maxWidth: 440,
+              fontWeight: 400,
+              marginBottom: 12,
             }}>
-              The behavior intelligence platform. Rhythmé unifies your tasks, habits, focus sessions, mood, and notes under lightweight ML insight — revealing the momentum behind your behavior, not just the behavior itself.
+              Most productivity apps track what you did. Rhythmé tracks how you were — and reveals the patterns beneath the surface.
+            </p>
+
+            <p style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 15,
+              color: 'var(--haze)',
+              lineHeight: 1.75,
+              opacity: 0.55,
+              maxWidth: 420,
+              fontWeight: 400,
+            }}>
+              Habits, tasks, focus sessions, mood, and momentum — unified under lightweight ML that learns your rhythm without demanding your attention.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: 12, marginTop: 36, flexWrap: 'wrap' }}>
-            <a
-              href="/rhythme"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                padding: '12px 24px',
-                background: 'transparent',
-                color: '#F5F0E8',
-                fontFamily: 'var(--font-sans)',
-                fontSize: 13,
-                fontWeight: 400,
-                textDecoration: 'none',
-                borderRadius: 999,
-                border: '1px solid rgba(245,240,232,0.2)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = 'rgba(245,240,232,0.4)'
-                e.currentTarget.style.background = 'rgba(245,240,232,0.05)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = 'rgba(245,240,232,0.2)'
-                e.currentTarget.style.background = 'transparent'
-              }}
-            >Learn more →</a>
-            <a
-              href="https://rhythme.amplecen.com"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                padding: '12px 24px',
-                background: 'var(--ember)',
-                color: '#fff',
-                fontFamily: 'var(--font-sans)',
-                fontSize: 13,
-                fontWeight: 500,
-                textDecoration: 'none',
-                borderRadius: 999,
-                transition: 'background 0.2s',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'var(--ember-dim)')}
+
+          <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
+            <Link href="/rhythme" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '12px 24px',
+              background: 'var(--ember)',
+              color: '#fff',
+              fontFamily: 'var(--font-sans)',
+              fontSize: 13,
+              fontWeight: 500,
+              textDecoration: 'none',
+              borderRadius: 999,
+              transition: 'background 0.2s',
+            }}
+              onMouseEnter={e => (e.currentTarget.style.background = '#C4693A')}
               onMouseLeave={e => (e.currentTarget.style.background = 'var(--ember)')}
-            >Launch Rhythmé ↗</a>
+            >Learn more about Rhythmé ↗</Link>
           </div>
         </div>
 
-        {/* Feature list */}
+        {/* What it solves */}
         <div style={{
           background: 'var(--warm-white-2)',
-          borderRadius: 20,
-          padding: '36px 36px',
+          borderRadius: 22,
+          padding: '36px 32px',
           border: '1px solid rgba(45,75,110,0.07)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}>
           <p style={{
             fontFamily: 'var(--font-sans)',
@@ -536,56 +542,91 @@ function Products() {
             letterSpacing: '2px',
             textTransform: 'uppercase',
             color: 'var(--midnight)',
-            opacity: 0.4,
+            opacity: 0.35,
             marginBottom: 24,
-          }}>Five signal types</p>
+          }}>The pain it solves</p>
+
           {[
-            { icon: '◆', label: 'Habits', desc: 'Long-term behavioral patterns' },
-            { icon: '◇', label: 'Tasks', desc: 'Daily intent and completion' },
-            { icon: '○', label: 'Focus', desc: 'Deep work & flow detection' },
-            { icon: '●', label: 'Mood', desc: 'Emotional context layer' },
-            { icon: '◉', label: 'Momentum', desc: 'The ML engine unifying all five' },
-          ].map(({ icon, label, desc }) => (
-            <div key={label} style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: 14,
+            { pain: 'You work all day but feel like nothing got done', fix: 'Momentum tracking' },
+            { pain: 'You know your habits but can\'t seem to keep them', fix: 'Behavioral patterns' },
+            { pain: 'Your mood tanks your productivity and you don\'t notice', fix: 'Emotional context' },
+            { pain: 'You forget what focus even feels like', fix: 'Flow detection' },
+            { pain: 'Every app tells you what to do. None know who you are.', fix: 'ML that learns you' },
+          ].map(({ pain, fix }) => (
+            <div key={fix} style={{
               padding: '14px 0',
               borderBottom: '1px solid rgba(45,75,110,0.06)',
             }}>
-              <span style={{ fontSize: 10, color: 'var(--ember)', marginTop: 4, opacity: 0.7 }}>{icon}</span>
-              <div>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 500, color: 'var(--midnight)', marginBottom: 2 }}>{label}</p>
-                <p style={{ fontFamily: 'var(--font-sans)', fontSize: 12, color: 'var(--midnight)', opacity: 0.45, fontWeight: 300 }}>{desc}</p>
-              </div>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 12,
+                color: 'var(--midnight)',
+                opacity: 0.5,
+                lineHeight: 1.5,
+                fontWeight: 300,
+                marginBottom: 5,
+              }}>{pain}</p>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 11,
+                fontWeight: 500,
+                color: 'var(--ember)',
+                letterSpacing: '0.5px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}>
+                <ArrowRight size={12} strokeWidth={2} /> {fix}
+              </p>
             </div>
           ))}
         </div>
       </div>
 
       {/* More coming */}
-      <div style={{
-        padding: '24px 32px',
+      <div className="amp-product-more" style={{
+        padding: '24px 36px',
         borderRadius: 14,
-        border: '1px dashed rgba(45,75,110,0.15)',
+        border: '1px dashed rgba(45,75,110,0.12)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         background: 'rgba(45,75,110,0.02)',
       }}>
-        <p style={{ fontSize: 14, color: 'var(--midnight)', opacity: 0.5, fontWeight: 300, fontStyle: 'italic', fontFamily: 'var(--font-display)' }}>
-          More products are in conception. We build one thing well before building the next.
-        </p>
-        <span style={{
+        <div>
+          <p style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 16,
+            fontStyle: 'italic',
+            color: 'var(--midnight)',
+            opacity: 0.6,
+            marginBottom: 4,
+          }}>
+            More products in conception.
+          </p>
+          <p style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 12,
+            color: 'var(--midnight)',
+            opacity: 0.35,
+            fontWeight: 300,
+          }}>Every one starts with a real pain. Every one ships when it's ready.</p>
+        </div>
+        <Link href="https://lyceum.amplecen.com" style={{
           fontFamily: 'var(--font-sans)',
           fontSize: 10,
-          letterSpacing: '2px',
+          letterSpacing: '1.5px',
           textTransform: 'uppercase',
-          color: 'var(--ember)',
-          opacity: 0.4,
+          color: 'var(--midnight)',
+          opacity: 0.35,
+          textDecoration: 'none',
           whiteSpace: 'nowrap',
           marginLeft: 24,
-        }}>In time</span>
+          transition: 'opacity 0.2s',
+        }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '0.35')}
+        >Amplecen Lyceum ↗</Link>
       </div>
     </section>
   )
@@ -594,24 +635,17 @@ function Products() {
 /* ─── Team ─── */
 function Team() {
   return (
-    <section id="team" className="section-container mobile-px-small" style={{ background: 'var(--warm-white-2)' }}>
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
+    <section id="team" className="amp-section" style={{ background: 'var(--warm-white-2)', padding: '96px 64px' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 64 }}>
           <span className="eyebrow">Founder</span>
-          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
+          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.18)' }} />
         </div>
-        <div className="mobile-stack" style={{
-          display: 'grid',
-          gridTemplateColumns: '280px 1fr',
-          gap: 48,
-          alignItems: 'start',
-        }}>
-          {/* Avatar */}
-          <div className="mobile-center" style={{
-            width: '100%',
-            maxWidth: 280,
-            aspectRatio: '1/1',
-            margin: '0 auto',
+
+        <div className="amp-team-grid" style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 56, alignItems: 'start' }}>
+          <div className="amp-team-photo" style={{
+            width: 260,
+            height: 280,
             background: 'var(--midnight)',
             borderRadius: 20,
             display: 'flex',
@@ -622,45 +656,56 @@ function Team() {
           }}>
             <span style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 96,
+              fontSize: 108,
               fontWeight: 300,
-              color: 'rgba(245,240,232,0.12)',
+              color: 'rgba(245,240,232,0.08)',
               userSelect: 'none',
+              position: 'absolute',
             }}>A</span>
             <div style={{
               position: 'absolute',
               bottom: 0, left: 0, right: 0,
               padding: '20px 24px',
-              textAlign: 'left',
-              background: 'linear-gradient(to top, rgba(30,51,80,0.95), transparent)',
+              background: 'linear-gradient(to top, rgba(30,51,80,0.96), transparent)',
             }}>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 400, color: '#F5F0E8' }}>Anonymous Identity</p>
-              <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.75, marginTop: 4 }}>Founder</p>
+              <p style={{ fontFamily: 'var(--font-display)', fontSize: 20, color: '#F5F0E8' }}>Anonymous</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.75, marginTop: 4 }}>Founder · Amplecen</p>
             </div>
           </div>
 
-          {/* Bio */}
-          <div className="mobile-center" style={{ paddingTop: 16 }}>
+          <div style={{ paddingTop: 12 }}>
             <p style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(20px, 2.5vw, 28px)',
-              fontWeight: 300,
+              fontSize: 'clamp(22px, 2.8vw, 30px)',
+              fontWeight: 500,
               fontStyle: 'italic',
               color: 'var(--midnight)',
-              lineHeight: 1.6,
+              lineHeight: 1.55,
               marginBottom: 28,
             }}>
-              "Building Amplecen from a conviction that software for human behavior deserves the same depth of thinking as the humans it serves."
+              "I kept noticing the same pattern — smart, motivated people losing hours every day to noise they never chose. So I started building the thing I wished existed."
             </p>
-            <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'inherit' }}>
+            <p style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 16,
+              color: 'var(--midnight)',
+              opacity: 0.5,
+              lineHeight: 1.75,
+              fontWeight: 400,
+              maxWidth: 480,
+              marginBottom: 32,
+            }}>
+              Amplecen is a multi-product organization built around a single conviction: that the most valuable thing you can give someone in the age of distraction is their own clarity back.
+            </p>
+            <div className="amp-team-meta" style={{ display: 'flex', gap: 32 }}>
               {[
-                { label: 'Role', value: 'Operations & Engineering' },
-                { label: 'Focus', value: 'Full-stack & ML' },
-                { label: 'Stage', value: 'Founder-led' },
+                { label: 'Role', value: 'Engineering & Product' },
+                { label: 'Approach', value: 'Pain-first, product-second' },
+                { label: 'Stage', value: 'Pre-seed, founder-led' },
               ].map(({ label, value }) => (
-                <div key={label} style={{ textAlign: 'left' }}>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.65, marginBottom: 6 }}>{label}</p>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 400, color: 'var(--midnight)' }}>{value}</p>
+                <div key={label}>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.6, marginBottom: 5 }}>{label}</p>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 400, color: 'var(--midnight)' }}>{value}</p>
                 </div>
               ))}
             </div>
@@ -678,66 +723,73 @@ function Contact() {
   const [sent, setSent] = useState(false)
 
   return (
-    <section id="contact" className="section-container">
-      <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 56 }}>
+    <section id="contact" className="amp-section" style={{ padding: '96px 64px' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 64 }}>
           <span className="eyebrow">Contact</span>
-          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.2)' }} />
+          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.18)' }} />
         </div>
 
-        <div className="mobile-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+        <div className="amp-contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
           <div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(32px, 3.5vw, 44px)',
-              fontWeight: 400,
+              fontSize: 'clamp(34px, 4vw, 50px)',
+              fontWeight: 600,
               color: 'var(--midnight)',
-              lineHeight: 1.2,
-              letterSpacing: '-0.5px',
+              lineHeight: 1.15,
+              letterSpacing: '-0.8px',
               marginBottom: 20,
             }}>
-              Let's talk about<br />
-              <em style={{ color: 'var(--ember)' }}>something real.</em>
+              Building something?<br />
+              <em style={{ color: 'var(--ember)' }}>Let's talk.</em>
             </h2>
             <p style={{
               fontSize: 16,
               color: 'var(--midnight)',
-              opacity: 0.55,
-              lineHeight: 1.75,
-              fontWeight: 300,
+              opacity: 0.5,
+              lineHeight: 1.8,
+              fontWeight: 400,
               maxWidth: 360,
+              marginBottom: 32,
             }}>
-              For partnerships, press, early access to Rhythmé, or thoughtful conversation — we read everything and respond with care.
+              For early access to Rhythmé, partnerships, press, or if you've found a pain point you think we should know about.
             </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[
+                { label: 'General', value: 'hello@amplecen.com' },
+                { label: 'Rhythmé early access', value: 'rhythme@amplecen.com' },
+                { label: 'Lyceum', value: 'lyceum.amplecen.com' },
+              ].map(({ label, value }) => (
+                <div key={label} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.55, minWidth: 140 }}>{label}</span>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--midnight)', opacity: 0.55 }}>{value}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {sent ? (
-            <div style={{ paddingTop: 16 }}>
+            <div style={{ paddingTop: 8 }}>
               <div style={{
-                width: 48, height: 48,
+                width: 44, height: 44,
                 borderRadius: '50%',
-                background: 'rgba(61,107,82,0.1)',
+                background: 'rgba(126,184,152,0.12)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: 16,
-              }}>
-                <span style={{ fontSize: 20 }}>✓</span>
-              </div>
-              <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontStyle: 'italic', color: 'var(--midnight)', marginBottom: 8 }}>Message received.</p>
-              <p style={{ fontSize: 14, color: 'var(--midnight)', opacity: 0.5, fontWeight: 300 }}>We'll be in touch soon.</p>
+                marginBottom: 16, fontSize: 18,
+              }}>✓</div>
+              <p style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontStyle: 'italic', color: 'var(--midnight)', marginBottom: 8 }}>Sent.</p>
+              <p style={{ fontSize: 14, color: 'var(--midnight)', opacity: 0.45, fontWeight: 300 }}>We'll get back to you soon.</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <input type="email" placeholder="Your email" value={email} onChange={e => setEmail(e.target.value)}
                 style={{
                   background: 'var(--warm-white-2)',
-                  border: '1px solid rgba(45,75,110,0.12)',
+                  border: '1px solid rgba(45,75,110,0.1)',
                   borderRadius: 12,
-                  padding: '14px 18px',
-                  fontSize: 15,
+                  padding: '13px 18px',
+                  fontSize: 14,
                   fontFamily: 'var(--font-sans)',
                   fontWeight: 300,
                   color: 'var(--midnight)',
@@ -745,20 +797,16 @@ function Contact() {
                   transition: 'border-color 0.2s',
                   width: '100%',
                 }}
-                onFocus={e => (e.target.style.borderColor = 'rgba(232,133,90,0.5)')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(45,75,110,0.12)')}
+                onFocus={e => (e.target.style.borderColor = 'rgba(232,133,90,0.45)')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(45,75,110,0.1)')}
               />
-              <textarea
-                placeholder="Your message (optional)"
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                rows={4}
+              <textarea placeholder="Your message" value={message} onChange={e => setMessage(e.target.value)} rows={4}
                 style={{
                   background: 'var(--warm-white-2)',
-                  border: '1px solid rgba(45,75,110,0.12)',
+                  border: '1px solid rgba(45,75,110,0.1)',
                   borderRadius: 12,
-                  padding: '14px 18px',
-                  fontSize: 15,
+                  padding: '13px 18px',
+                  fontSize: 14,
                   fontFamily: 'var(--font-sans)',
                   fontWeight: 300,
                   color: 'var(--midnight)',
@@ -767,19 +815,18 @@ function Contact() {
                   transition: 'border-color 0.2s',
                   width: '100%',
                 }}
-                onFocus={e => (e.target.style.borderColor = 'rgba(232,133,90,0.5)')}
-                onBlur={e => (e.target.style.borderColor = 'rgba(45,75,110,0.12)')}
+                onFocus={e => (e.target.style.borderColor = 'rgba(232,133,90,0.45)')}
+                onBlur={e => (e.target.style.borderColor = 'rgba(45,75,110,0.1)')}
               />
-              <button
-                onClick={() => { if (email) setSent(true) }}
+              <button onClick={() => { if (email) setSent(true) }}
                 style={{
                   background: 'var(--midnight)',
                   color: '#fff',
                   border: 'none',
                   borderRadius: 999,
-                  padding: '14px 32px',
+                  padding: '13px 28px',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: 500,
                   cursor: 'pointer',
                   alignSelf: 'flex-start',
@@ -799,32 +846,28 @@ function Contact() {
 /* ─── Footer ─── */
 function Footer() {
   return (
-    <footer className="section-container mobile-stack" style={{
+    <footer className="amp-footer" style={{
       borderTop: '1px solid rgba(45,75,110,0.08)',
+      padding: '28px 64px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       background: 'var(--warm-white-2)',
-      flexWrap: 'wrap',
-      gap: 24,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <LogoMark size={24} />
-        <span style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--midnight)', opacity: 0.6 }}>Amplecen</span>
+        <span style={{ fontFamily: 'var(--font-display)', fontSize: 14, color: 'var(--midnight)', opacity: 0.5 }}>Amplecen</span>
       </div>
-      <div style={{ display: 'flex', gap: 28, alignItems: 'center', flexWrap: 'wrap' }}>
-        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3 }}>© 2025 Amplecen</span>
-        <a href="https://rhythme.amplecen.com" style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: 12,
-          color: 'var(--ember)',
-          opacity: 0.6,
-          textDecoration: 'none',
-          transition: 'opacity 0.2s',
-        }}
+      <div className="amp-footer-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
+        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.25 }}>© 2025 Amplecen</span>
+        <Link href="/rhythme" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--ember)', opacity: 0.5, textDecoration: 'none', transition: 'opacity 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-          onMouseLeave={e => (e.currentTarget.style.opacity = '0.6')}
-        >Rhythmé ↗</a>
+          onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
+        >Rhythmé ↗</Link>
+        <Link href="https://lyceum.amplecen.com" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3, textDecoration: 'none', transition: 'opacity 0.2s' }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '0.3')}
+        >Lyceum ↗</Link>
       </div>
     </footer>
   )
