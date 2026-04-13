@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&family=DM+Serif+Display:ital@0;1&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -177,4 +177,82 @@ body {
   font-size: 32px;
   color: var(--midnight);
   text-decoration: none;
+}
+
+/* ============================================
+   RHYTHMÉ LANDING PAGE — Design Tokens & Essentials
+   Only tokens + things that genuinely need CSS
+   (hover states, animations, responsive breakpoints)
+   ============================================ */
+:root {
+  --rl-bg:           #0D0F14;
+  --rl-bg-surface:   #13161D;
+  --rl-bg-elevated:  #1A1D26;
+  --rl-accent:       #7EB8A4;
+  --rl-accent-dim:   #5E9A86;
+  --rl-warm:         #C9A96E;
+  --rl-text:         #F0EDE8;
+  --rl-text-muted:   #8A8F9E;
+  --rl-text-dim:     #565B6B;
+  --rl-border:       rgba(240, 237, 232, 0.08);
+  --rl-border-hover: rgba(240, 237, 232, 0.15);
+  --rl-glass:        rgba(13, 15, 20, 0.85);
+  --rl-glass-border: rgba(240, 237, 232, 0.06);
+  --rl-font-display: 'DM Serif Display', Georgia, serif;
+  --rl-font-body:    'DM Sans', system-ui, sans-serif;
+  --rl-max-width:    1200px;
+}
+
+/* Scroll-reveal — needs CSS for IntersectionObserver class toggle */
+.rl-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0, 0, 1),
+              transform 0.8s cubic-bezier(0.25, 0, 0, 1);
+}
+.rl-reveal.visible { opacity: 1; transform: translateY(0); }
+
+.rl-stagger > .rl-reveal:nth-child(1) { transition-delay: 0s; }
+.rl-stagger > .rl-reveal:nth-child(2) { transition-delay: 0.08s; }
+.rl-stagger > .rl-reveal:nth-child(3) { transition-delay: 0.16s; }
+.rl-stagger > .rl-reveal:nth-child(4) { transition-delay: 0.24s; }
+.rl-stagger > .rl-reveal:nth-child(5) { transition-delay: 0.32s; }
+.rl-stagger > .rl-reveal:nth-child(6) { transition-delay: 0.40s; }
+
+/* Hover/focus pseudo-classes — can't be done inline */
+.rl-nav-link:hover { opacity: 1; background: rgba(240, 237, 232, 0.06); }
+.rl-nav-cta:hover  { background: var(--rl-accent-dim); }
+.rl-btn-primary:hover {
+  background: var(--rl-accent-dim);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 32px rgba(126, 184, 164, 0.2);
+}
+.rl-btn-secondary:hover { color: var(--rl-text); }
+.rl-card:hover {
+  border-color: var(--rl-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+}
+.rl-privacy-card:hover { border-color: var(--rl-border-hover); }
+.rl-footer-link:hover  { color: var(--rl-text-muted); }
+.rl-launch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(126, 184, 164, 0.4);
+  background: var(--rl-accent-dim);
+}
+.rl-email-input:focus { border-color: var(--rl-accent); }
+.rl-email-input::placeholder { color: var(--rl-text-dim); }
+
+/* Selection color scoped to the landing page */
+.rl-page ::selection { background: var(--rl-accent); color: var(--rl-bg); }
+
+/* Responsive — grid/layout shifts that need media queries */
+@media (max-width: 768px) {
+  .rl-feature-grid  { grid-template-columns: 1fr !important; }
+  .rl-privacy-grid  { grid-template-columns: 1fr !important; }
+  .rl-steps         { flex-direction: column !important; gap: 24px !important; }
+  .rl-step          { text-align: left; }
+  .rl-hero-visual   { display: none !important; }
+  .rl-email-form    { flex-direction: column; }
+  .rl-hero-grid     { grid-template-columns: 1fr !important; }
 }

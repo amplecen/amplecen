@@ -453,7 +453,7 @@ function Products() {
               opacity: 0.8,
               display: 'block',
               marginBottom: 16,
-            }}>Flagship · Live soon</span>
+            }}>Flagship · Early Access</span>
             <h2 style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(40px, 4vw, 56px)',
@@ -474,7 +474,33 @@ function Products() {
               The behavior intelligence platform. Rhythmé unifies your tasks, habits, focus sessions, mood, and notes under lightweight ML insight — revealing the momentum behind your behavior, not just the behavior itself.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
+          <div style={{ display: 'flex', gap: 12, marginTop: 36, flexWrap: 'wrap' }}>
+            <a
+              href="/rhythme"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '12px 24px',
+                background: 'transparent',
+                color: '#F5F0E8',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 13,
+                fontWeight: 400,
+                textDecoration: 'none',
+                borderRadius: 999,
+                border: '1px solid rgba(245,240,232,0.2)',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(245,240,232,0.4)'
+                e.currentTarget.style.background = 'rgba(245,240,232,0.05)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(245,240,232,0.2)'
+                e.currentTarget.style.background = 'transparent'
+              }}
+            >Learn more →</a>
             <a
               href="https://rhythme.amplecen.com"
               style={{
@@ -493,7 +519,7 @@ function Products() {
               }}
               onMouseEnter={e => (e.currentTarget.style.background = 'var(--ember-dim)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'var(--ember)')}
-            >Visit Rhythmé ↗</a>
+            >Launch Rhythmé ↗</a>
           </div>
         </div>
 
