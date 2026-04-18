@@ -3,31 +3,31 @@ import { fraunces, dmSans, dmMono, dmSerifDisplay } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://amplecen.com'),
+  metadataBase: new URL("https://www.amplecen.com"), // ← Primary domain
   title: {
-    default: 'Amplecen',
-    template: '%s · Amplecen',
+    default: "Amplecen",
+    template: "%s · Amplecen",
   },
-  description: 'Building tools at the intersection of human behavior, intelligence, and emotional awareness.',
-  keywords: ['behavior intelligence', 'productivity', 'human behavior', 'Rhythmé', 'Amplecen'],
-  authors: [{ name: 'Amplecen' }],
-  creator: 'Amplecen',
+  description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness. Discover Rhythmé and products that help you reclaim focus in a distracted world.",
+  keywords: ["focus tools", "productivity", "human behavior", "Rhythmé", "Amplecen", "deep work", "attention recovery", "distraction free"],
+  authors: [{ name: "Amplecen" }],
+  creator: "Amplecen",
 
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://amplecen.com',
-    siteName: 'Amplecen',
-    title: 'Amplecen — Human behavior. Broad reach.',
-    description: 'Building tools at the intersection of human behavior, intelligence, and emotional awareness.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Amplecen' }],
+    type: "website",
+    locale: "en_US",
+    url: "https://www.amplecen.com",
+    siteName: "Amplecen",
+    title: "Amplecen — Human behavior. Broad reach.",
+    description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Amplecen" }],
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Amplecen — Human behavior. Broad reach.',
-    description: 'Building tools at the intersection of human behavior, intelligence, and emotional awareness.',
-    images: ['/og-image.png'],
+    card: "summary_large_image",
+    title: "Amplecen — Human behavior. Broad reach.",
+    description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
+    images: ["/og-image.png"],
   },
 
   robots: {
@@ -37,11 +37,18 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", sizes: "32x32" },
+    ],
+    apple: "/apple-touch-icon.png", // add this file too if you have it
+    shortcut: "/favicon.ico",
   },
-}
+  alternates: {
+    canonical: "https://www.amplecen.com", // ← Homepage canonical
+  },
+};
 
 export default function RootLayout({
   children,
@@ -54,6 +61,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${dmSans.variable} ${dmMono.variable} ${dmSerifDisplay.variable}`}
     >
       <head>
+        {/* Organization schema (you already had this) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -61,7 +69,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Amplecen",
-              url: "https://amplecen.com",
+              url: "https://www.amplecen.com",
               description:
                 "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
               foundingDate: "2025",
@@ -69,6 +77,19 @@ export default function RootLayout({
                 "https://twitter.com/amplecen",
                 "https://linkedin.com/company/amplecen",
               ],
+            }),
+          }}
+        />
+
+        {/* NEW: WebSite schema – this fixes the "amplecen.com" label in Google search results */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Amplecen",
+              url: "https://www.amplecen.com",
             }),
           }}
         />
