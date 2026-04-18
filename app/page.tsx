@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { supabase } from '../lib/supabase'
 
 /* ─── Logomark ─── */
 function LogoMark({ size = 36 }: { size?: number }) {
@@ -878,6 +879,36 @@ function Contact() {
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [sent, setSent] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSend = async () => {
+    if (!email) return
+    setIsSubmitting(true)
+    try {
+      await supabase.from('user_invites').insert([
+        {
+          user_name: "",
+          user_email: email,
+          message: message,
+          added_from: {
+            source: {
+              url: window.location.href,
+              app: "landing_v1",
+              cta: "footer_form"
+            },
+            meta: {
+              referrer: document.referrer || "direct"
+            }
+          }
+        }
+      ])
+      setSent(true)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <section id="contact" className="amp-section" style={{ padding: '96px 64px' }}>
@@ -975,7 +1006,7 @@ function Contact() {
                 onFocus={e => (e.target.style.borderColor = 'rgba(232,133,90,0.45)')}
                 onBlur={e => (e.target.style.borderColor = 'rgba(45,75,110,0.1)')}
               />
-              <button onClick={() => { if (email) setSent(true) }}
+              <button onClick={handleSend} disabled={isSubmitting}
                 style={{
                   background: 'var(--midnight)',
                   color: '#fff',
@@ -985,13 +1016,14 @@ function Contact() {
                   fontFamily: 'var(--font-sans)',
                   fontSize: 13,
                   fontWeight: 500,
-                  cursor: 'pointer',
+                  cursor: isSubmitting ? 'wait' : 'pointer',
                   alignSelf: 'flex-start',
                   transition: 'background 0.2s',
+                  opacity: isSubmitting ? 0.7 : 1,
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
-              >Send message</button>
+                onMouseEnter={e => (!isSubmitting && (e.currentTarget.style.background = 'var(--midnight-deep)'))}
+                onMouseLeave={e => (!isSubmitting && (e.currentTarget.style.background = 'var(--midnight)'))}
+              >{isSubmitting ? 'Sending...' : 'Send message'}</button>
             </div>
           )}
         </div>

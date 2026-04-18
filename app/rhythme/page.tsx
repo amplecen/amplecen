@@ -3,6 +3,7 @@
 import { ArrowRight, Brain, Database, EyeOff, Focus, LineChart, ShieldCheck, SunMoon, Menu, X, Activity } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState, useRef, useCallback } from 'react'
+import { supabase } from '../../lib/supabase'
 
 /* ─── Scroll Reveal Hook ─── */
 function useScrollReveal() {
@@ -473,10 +474,37 @@ function HowItWorksSection() {
 function EarlyAccessSection() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email.includes('@')) setSubmitted(true)
+    if (!email.includes('@')) return
+
+    setIsSubmitting(true)
+    try {
+      await supabase.from('user_invites').insert([
+        {
+          user_name: "",
+          user_email: email,
+          message: "Early access request from Rhythme page",
+          added_from: {
+            source: {
+              url: window.location.href,
+              app: "landing_v1",
+              cta: "footer_form"
+            },
+            meta: {
+              referrer: document.referrer || "direct"
+            }
+          }
+        }
+      ])
+      setSubmitted(true)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }, [email])
 
   return (
@@ -525,13 +553,14 @@ function EarlyAccessSection() {
                     outline: 'none', transition: 'border-color 0.2s',
                   }}
                 />
-                <button type="submit" className="rl-btn-primary" style={{
+                <button type="submit" className="rl-btn-primary" disabled={isSubmitting} style={{
                   display: 'inline-flex', alignItems: 'center', gap: 10,
                   padding: '16px 32px', background: V('accent'), color: V('bg'),
                   fontFamily: V('font-body'), fontSize: 14, fontWeight: 500,
-                  borderRadius: 999, border: 'none', cursor: 'pointer',
+                  borderRadius: 999, border: 'none', cursor: isSubmitting ? 'wait' : 'pointer',
                   transition: 'all 0.25s ease', whiteSpace: 'nowrap',
-                }}>Get Early Access — Free</button>
+                  opacity: isSubmitting ? 0.7 : 1,
+                }}>{isSubmitting ? 'Adding...' : 'Get Early Access — Free'}</button>
               </div>
               <p style={{ fontSize: 12, color: V('text-dim'), fontWeight: 300, marginTop: 4 }}>
                 No spam. No credit card. Just early access to something built carefully.
