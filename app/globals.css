@@ -131,6 +131,33 @@ body {
     grid-template-columns: 1fr !important;
   }
 
+  .amp-hero {
+    grid-template-columns: 1fr !important;
+    gap: 52px !important;
+    padding: 110px 48px 72px !important;
+    min-height: auto !important;
+  }
+
+  .amp-beliefs-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .amp-principles-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .amp-principles-grid > div {
+    grid-column: auto !important;
+  }
+
+  .amp-product-side {
+    min-height: auto !important;
+  }
+
+  .amp-contact-grid {
+    gap: 56px !important;
+  }
+
   /* Tablet: team grid stacks */
   .amp-team-grid {
     grid-template-columns: 1fr !important;
@@ -186,12 +213,37 @@ body {
     padding: 14px 20px !important;
   }
 
+  .amp-nav-links {
+    gap: 8px !important;
+  }
+
+  .amp-nav-links > a:nth-child(-n+4) {
+    display: none !important;
+  }
+
+  .amp-nav-links > a:last-child {
+    margin-left: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+  }
+
   /* Hero */
   .amp-hero {
     padding-top: 100px !important;
     padding-bottom: 60px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
     min-height: auto !important;
     gap: 40px !important;
+  }
+
+  .amp-hero-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .amp-beliefs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
   }
 
   /* Sections: responsive padding */
@@ -216,6 +268,10 @@ body {
   .amp-product-card {
     padding: 36px 28px !important;
     min-height: auto !important;
+  }
+
+  .amp-product-side {
+    padding: 28px 24px !important;
   }
 
   .amp-product-more {
@@ -252,6 +308,24 @@ body {
     gap: 48px !important;
   }
 
+  .amp-contact-item {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+
+  .amp-contact-item > span:first-child {
+    min-width: 0 !important;
+  }
+
+  .amp-principles-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .amp-principles-grid > div {
+    grid-column: auto !important;
+  }
+
   /* Footer */
   .amp-footer {
     flex-direction: column !important;
@@ -264,6 +338,32 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .amp-nav {
+    padding: 12px 14px !important;
+  }
+
+  .amp-nav-brand span {
+    font-size: 16px !important;
+  }
+
+  .amp-nav-links > a:last-child {
+    padding: 7px 12px !important;
+    font-size: 11px !important;
+  }
+
+  .amp-hero,
+  .amp-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .amp-divider {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
   }
 }
 

@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Menu, X, ArrowRight } from 'lucide-react'
-import Link from 'next/link'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 /* ─── Logomark ─── */
 function LogoMark({ size = 36 }: { size?: number }) {
@@ -21,7 +20,6 @@ function LogoMark({ size = 36 }: { size?: number }) {
 /* ─── Nav ─── */
 function Nav() {
   const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48)
@@ -29,119 +27,77 @@ function Nav() {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  const navItems = ['Manifesto', 'Products', 'Team', 'Contact']
-
   return (
-    <>
-      <nav className="amp-nav" style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0,
-        zIndex: 100,
-        padding: '18px 56px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        transition: 'all 0.35s ease',
-        background: scrolled ? 'rgba(245,240,232,0.94)' : 'transparent',
-        borderBottom: scrolled ? '1px solid rgba(45,75,110,0.08)' : '1px solid transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-      }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-          <LogoMark size={32} />
-          <span style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 18,
-            fontWeight: 400,
-            color: 'var(--midnight)',
-            letterSpacing: '-0.2px',
-          }}>Amplecen</span>
-        </Link>
-
-        {/* Desktop links */}
-        <div className="mobile-hide" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          {navItems.map(item => (
-            <Link key={item} href={`#${item.toLowerCase()}`} style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 13,
-              fontWeight: 400,
-              color: 'var(--midnight)',
-              textDecoration: 'none',
-              padding: '6px 14px',
-              borderRadius: 999,
-              transition: 'all 0.2s ease',
-              opacity: 0.6,
-            }}
-              onMouseEnter={e => {
-                e.currentTarget.style.opacity = '1'
-                e.currentTarget.style.background = 'rgba(45,75,110,0.07)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.opacity = '0.6'
-                e.currentTarget.style.background = 'transparent'
-              }}
-            >{item}</Link>
-          ))}
-          <Link href="/rhythme" style={{
+    <nav className="amp-nav" style={{
+      position: 'fixed',
+      top: 0, left: 0, right: 0,
+      zIndex: 100,
+      padding: '18px 56px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      transition: 'all 0.35s ease',
+      background: scrolled ? 'rgba(245,240,232,0.94)' : 'transparent',
+      borderBottom: scrolled ? '1px solid rgba(45,75,110,0.08)' : '1px solid transparent',
+      backdropFilter: scrolled ? 'blur(16px)' : 'none',
+    }}>
+      <a className="amp-nav-brand" href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+        <LogoMark size={32} />
+        <span style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 18,
+          fontWeight: 400,
+          color: 'var(--midnight)',
+          letterSpacing: '-0.2px',
+        }}>Amplecen</span>
+      </a>
+      <div className="amp-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        {['What we believe', 'Products', 'Team', 'Contact'].map(item => (
+          <a key={item} href={`#${item === 'What we believe' ? 'principles' : item.toLowerCase()}`} style={{
             fontFamily: 'var(--font-sans)',
             fontSize: 13,
-            fontWeight: 500,
-            color: '#fff',
+            fontWeight: 400,
+            color: 'var(--midnight)',
             textDecoration: 'none',
-            padding: '8px 20px',
+            padding: '6px 14px',
             borderRadius: 999,
-            background: 'var(--midnight)',
-            marginLeft: 8,
-            transition: 'background 0.2s ease',
+            transition: 'all 0.2s ease',
+            opacity: 0.6,
           }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
-          >Try Rhythmé</Link>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="mobile-show"
-          onClick={() => setMobileOpen(true)}
-          style={{ display: 'none', background: 'none', border: 'none', color: 'var(--midnight)', cursor: 'pointer', padding: 4 }}
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-      </nav>
-
-      {/* Mobile overlay */}
-      {mobileOpen && (
-        <div className="mobile-nav-overlay">
-          <button
-            onClick={() => setMobileOpen(false)}
-            style={{ position: 'absolute', top: 20, right: 24, background: 'none', border: 'none', color: 'var(--midnight)', cursor: 'pointer', padding: 4 }}
-            aria-label="Close menu"
-          >
-            <X size={28} />
-          </button>
-          {navItems.map(item => (
-            <Link key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileOpen(false)} className="mobile-nav-link">{item}</Link>
-          ))}
-          <Link
-            href="/rhythme"
-            onClick={() => setMobileOpen(false)}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 28,
-              color: 'var(--ember)',
-              textDecoration: 'none',
+            onMouseEnter={e => {
+              e.currentTarget.style.opacity = '1'
+              e.currentTarget.style.background = 'rgba(45,75,110,0.07)'
             }}
-          >Try Rhythmé ↗</Link>
-        </div>
-      )}
-    </>
+            onMouseLeave={e => {
+              e.currentTarget.style.opacity = '0.6'
+              e.currentTarget.style.background = 'transparent'
+            }}
+          >{item}</a>
+        ))}
+        <a href="/rhythme" style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 13,
+          fontWeight: 500,
+          color: '#fff',
+          textDecoration: 'none',
+          padding: '8px 20px',
+          borderRadius: 999,
+          background: 'var(--midnight)',
+          marginLeft: 8,
+          transition: 'background 0.2s ease',
+        }}
+          onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
+          onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
+        >Explore products</a>
+      </div>
+    </nav>
   )
 }
 
 /* ─── Hero ─── */
 function Hero() {
   return (
-    <section className="amp-hero mobile-stack" style={{
+    <section className="amp-hero" style={{
       minHeight: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
@@ -168,36 +124,36 @@ function Hero() {
             borderRadius: 999,
           }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--ember)', display: 'inline-block' }} />
-            Building for the distracted generation
+            Human-centered product studio
           </span>
         </div>
 
         <h1 className="animate-fade-up" style={{
           animationDelay: '0.2s',
           fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(46px, 5.5vw, 74px)',
-          fontWeight: 600,
+          fontSize: 'clamp(42px, 5vw, 68px)',
+          fontWeight: 400,
           color: 'var(--midnight)',
-          lineHeight: 1.08,
-          letterSpacing: '-1.5px',
-          marginBottom: 28,
+          lineHeight: 1.1,
+          letterSpacing: '-1px',
+          marginBottom: 24,
         }}>
-          Your attention<br />
-          is worth<br />
-          <em style={{ color: 'var(--ember)', fontStyle: 'italic' }}>fighting for.</em>
+          Building calmer, more<br />
+          <em style={{ color: 'var(--ember)', fontStyle: 'italic' }}>connected</em> digital<br />
+          experiences.
         </h1>
 
         <p className="animate-fade-up" style={{
           animationDelay: '0.32s',
-          fontSize: 18,
+          fontSize: 17,
           color: 'var(--midnight)',
           opacity: 0.6,
           lineHeight: 1.8,
-          maxWidth: 460,
+          maxWidth: 440,
           marginBottom: 40,
-          fontWeight: 400,
+          fontWeight: 300,
         }}>
-          We find where people are losing — their focus, their time, their sense of momentum — and build products that give it back. Quietly. Without adding to the noise.
+          We design tools that support attention, emotional steadiness, and meaningful connection — grounded in behavioral insight and privacy-conscious personalization.
         </p>
 
         <div className="animate-fade-up" style={{
@@ -207,7 +163,7 @@ function Hero() {
           alignItems: 'center',
           flexWrap: 'wrap',
         }}>
-          <Link href="#products" style={{
+          <a href="#products" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
@@ -224,10 +180,15 @@ function Hero() {
             onMouseEnter={e => (e.currentTarget.style.background = 'var(--midnight-deep)')}
             onMouseLeave={e => (e.currentTarget.style.background = 'var(--midnight)')}
           >
-            See what we're building
-            <ArrowRight size={16} />
-          </Link>
-          <Link href="#manifesto" style={{
+            Explore our products
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+              <path d="M1 5h12M8 1l5 4-5 4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+          <a href="#principles" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
             fontSize: 14,
             color: 'var(--midnight)',
             textDecoration: 'none',
@@ -237,38 +198,38 @@ function Hero() {
           }}
             onMouseEnter={e => (e.currentTarget.style.opacity = '0.9')}
             onMouseLeave={e => (e.currentTarget.style.opacity = '0.45')}
-          >Read our thinking →</Link>
+          >Our principles <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" /></a>
         </div>
       </div>
 
       {/* Right — stat cards */}
-      <div className="animate-fade-in" style={{ animationDelay: '0.5s', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+      <div className="animate-fade-in amp-hero-cards" style={{ animationDelay: '0.5s', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         {[
           {
-            stat: '47',
-            unit: 'times',
-            label: 'The average person checks their phone per day',
+            stat: '3',
+            unit: 'things',
+            label: 'Clarity, emotional intelligence, and connection — the three things we build around',
             color: 'var(--ember)',
             bg: 'rgba(232,133,90,0.07)',
           },
           {
-            stat: '23',
-            unit: 'minutes',
-            label: 'To refocus after a single interruption',
+            stat: '0',
+            unit: 'dark patterns',
+            label: 'No guilt loops, no engagement traps, no design that works against you',
             color: 'var(--midnight)',
             bg: 'rgba(45,75,110,0.06)',
           },
           {
-            stat: '2.5',
-            unit: 'hours',
-            label: 'Lost to distraction every working day',
+            stat: '2',
+            unit: 'products',
+            label: 'Live and in development — each one starting from a real, observed pain point',
             color: '#7EB898',
             bg: 'rgba(126,184,152,0.08)',
           },
           {
-            stat: '0',
-            unit: 'tools',
-            label: 'Built specifically to fix this — until now',
+            stat: '1',
+            unit: 'rule',
+            label: 'Helpful by default, controllable always — privacy is never an afterthought',
             color: 'var(--ember)',
             bg: 'rgba(232,133,90,0.05)',
           },
@@ -282,8 +243,8 @@ function Hero() {
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 5, marginBottom: 8 }}>
               <span style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 44,
-                fontWeight: 600,
+                fontSize: 40,
+                fontWeight: 400,
                 color,
                 lineHeight: 1,
               }}>{stat}</span>
@@ -297,7 +258,7 @@ function Hero() {
             </div>
             <p style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 13,
+              fontSize: 12,
               color: 'var(--midnight)',
               opacity: 0.55,
               lineHeight: 1.55,
@@ -328,35 +289,35 @@ function Manifesto() {
   const beliefs = [
     {
       num: '01',
-      headline: 'The age of distraction is engineered.',
-      body: 'Every app, platform, and notification is designed to capture attention — and hold it. We didn\'t drift into distraction. We were pulled there, deliberately, by systems optimized for engagement over human wellbeing.',
+      headline: 'Fewer distractions, clearer feedback.',
+      body: 'Modern software is powerful but often noisy. We build in the opposite direction — reducing decision fatigue and helping people know what matters next, without adding another surface to check.',
     },
     {
       num: '02',
-      headline: 'Most productivity tools make it worse.',
-      body: 'They add more surfaces, more dashboards, more places to check. They mistake busyness for progress. They optimize your output without ever asking whether you\'re okay. We think that\'s a design failure.',
+      headline: 'Behavior-aware, not behavior-blind.',
+      body: 'We design around real behavior: overload, inconsistency, motivation cycles, and shifting context. Not ideal routines. The gap between knowing what to do and actually doing it is where we work.',
     },
     {
       num: '03',
-      headline: 'Real tools understand people first.',
-      body: 'Not just their tasks. Their patterns. Their energy. The emotional context that shapes whether a good intention becomes a real action. Software that knows this builds differently.',
+      headline: 'Personalization that respects you.',
+      body: 'Personalization should feel helpful, not invasive. We prioritize user control, transparency, and sensible data boundaries — especially for anything personal or sensitive.',
     },
     {
       num: '04',
-      headline: 'We find the pain. We build the answer.',
-      body: 'Every product Amplecen builds starts with a genuine human problem — something people are losing in the noise of modern life. Then we make one thing that gives it back, as quietly and completely as we can.',
+      headline: 'Systems, not guilt.',
+      body: 'We avoid gamification that makes you feel bad for being human. Our products are designed to be sustainable: gentle guardrails, simple defaults, and progress you can actually maintain.',
     },
   ]
 
   return (
-    <section id="manifesto" className="amp-section" style={{ padding: '96px 64px', background: 'var(--warm-white-2)' }}>
+    <section id="principles" className="amp-section" style={{ padding: '96px 64px', background: 'var(--warm-white-2)' }}>
       <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 64 }}>
-          <span className="eyebrow">Our thinking</span>
+          <span className="eyebrow">What we believe</span>
           <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.18)' }} />
         </div>
 
-        <div className="mobile-stack-tight" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+        <div className="amp-beliefs-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
           {beliefs.map(({ num, headline, body }) => (
             <div
               key={num}
@@ -388,17 +349,17 @@ function Manifesto() {
               }}>{num}</span>
               <h3 style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 21,
-                fontWeight: 500,
+                fontSize: 19,
+                fontWeight: 400,
                 color: 'var(--midnight)',
                 lineHeight: 1.35,
                 marginBottom: 14,
-                letterSpacing: '-0.3px',
+                letterSpacing: '-0.2px',
               }}>{headline}</h3>
               <p style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: 15,
-                fontWeight: 400,
+                fontSize: 14,
+                fontWeight: 300,
                 color: 'var(--midnight)',
                 opacity: 0.6,
                 lineHeight: 1.75,
@@ -458,7 +419,7 @@ function Products() {
                 textTransform: 'uppercase',
                 color: 'var(--ember)',
                 opacity: 0.85,
-              }}>Flagship · Behavior Intelligence</span>
+              }}>Productivity · Calm by design</span>
               <span style={{
                 fontFamily: 'var(--font-sans)',
                 fontSize: 10,
@@ -471,42 +432,42 @@ function Products() {
 
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(44px, 5vw, 62px)',
-              fontWeight: 600,
+              fontSize: 'clamp(40px, 4.5vw, 58px)',
+              fontWeight: 400,
               color: '#F5F0E8',
-              letterSpacing: '-0.8px',
+              letterSpacing: '-0.5px',
               lineHeight: 1.08,
               marginBottom: 20,
             }}>Rhythmé</h2>
 
             <p style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 17,
+              fontSize: 16,
               color: 'var(--haze)',
               lineHeight: 1.75,
               opacity: 0.8,
-              maxWidth: 440,
-              fontWeight: 400,
+              maxWidth: 420,
+              fontWeight: 300,
               marginBottom: 12,
             }}>
-              Most productivity apps track what you did. Rhythmé tracks how you were — and reveals the patterns beneath the surface.
+              A personal alignment system that brings planning, focus, habits, and reflection into one steady rhythm.
             </p>
 
             <p style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 15,
+              fontSize: 14,
               color: 'var(--haze)',
               lineHeight: 1.75,
               opacity: 0.55,
-              maxWidth: 420,
-              fontWeight: 400,
+              maxWidth: 400,
+              fontWeight: 300,
             }}>
-              Habits, tasks, focus sessions, mood, and momentum — unified under lightweight ML that learns your rhythm without demanding your attention.
+              Built for ambitious students and early-career builders who want to make progress without the stress — so consistency feels sustainable, not exhausting.
             </p>
           </div>
 
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
-            <Link href="/rhythme" style={{
+            <a href="/rhythme" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: 8,
@@ -522,12 +483,12 @@ function Products() {
             }}
               onMouseEnter={e => (e.currentTarget.style.background = '#C4693A')}
               onMouseLeave={e => (e.currentTarget.style.background = 'var(--ember)')}
-            >Learn more about Rhythmé ↗</Link>
+            >Visit Rhythmé <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" /></a>
           </div>
         </div>
 
         {/* What it solves */}
-        <div style={{
+        <div className="amp-product-side" style={{
           background: 'var(--warm-white-2)',
           borderRadius: 22,
           padding: '36px 32px',
@@ -547,11 +508,11 @@ function Products() {
           }}>The pain it solves</p>
 
           {[
-            { pain: 'You work all day but feel like nothing got done', fix: 'Momentum tracking' },
-            { pain: 'You know your habits but can\'t seem to keep them', fix: 'Behavioral patterns' },
-            { pain: 'Your mood tanks your productivity and you don\'t notice', fix: 'Emotional context' },
-            { pain: 'You forget what focus even feels like', fix: 'Flow detection' },
-            { pain: 'Every app tells you what to do. None know who you are.', fix: 'ML that learns you' },
+            { pain: 'You plan, then life happens and the plan falls apart', fix: 'Flexible rhythm system' },
+            { pain: 'You know your habits but can\'t seem to keep them', fix: 'Behavioral pattern tracking' },
+            { pain: 'Your mood shapes your day but nothing accounts for it', fix: 'Emotional context layer' },
+            { pain: 'You forget what sustained focus even feels like', fix: 'Flow session detection' },
+            { pain: 'Every app tells you what to do. None know who you are.', fix: 'Personalized, not prescriptive' },
           ].map(({ pain, fix }) => (
             <div key={fix} style={{
               padding: '14px 0',
@@ -567,17 +528,163 @@ function Products() {
                 marginBottom: 5,
               }}>{pain}</p>
               <p style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 4,
                 fontFamily: 'var(--font-sans)',
                 fontSize: 11,
                 fontWeight: 500,
                 color: 'var(--ember)',
                 letterSpacing: '0.5px',
-                display: 'flex',
+              }}><ArrowRight size={12} strokeWidth={2} aria-hidden="true" /> {fix}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* GrooveEstrella */}
+      <div className="amp-product-grid" style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 360px',
+        gap: 20,
+        marginBottom: 20,
+      }}>
+        <div className="amp-product-card" style={{
+          background: '#1A2B20',
+          borderRadius: 22,
+          padding: '52px 56px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: 320,
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: -60, right: -60,
+            width: 260, height: 260,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(126,184,152,0.14) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+              <span style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 10,
+                fontWeight: 500,
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                color: '#7EB898',
+                opacity: 0.85,
+              }}>Music · Discovery & sharing</span>
+              <span style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 10,
+                background: 'rgba(126,184,152,0.15)',
+                color: '#7EB898',
+                padding: '3px 10px',
+                borderRadius: 999,
+              }}>In development</span>
+            </div>
+            <h2 style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(32px, 4vw, 48px)',
+              fontWeight: 400,
+              color: '#F5F0E8',
+              letterSpacing: '-0.5px',
+              lineHeight: 1.1,
+              marginBottom: 20,
+            }}>GrooveEstrella</h2>
+            <p style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 16,
+              color: '#8FAFC9',
+              lineHeight: 1.75,
+              opacity: 0.8,
+              maxWidth: 420,
+              fontWeight: 300,
+              marginBottom: 12,
+            }}>
+              One clean link for any track across platforms — rich metadata, and a discovery engine that actually learns your taste.
+            </p>
+            <p style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 14,
+              color: '#8FAFC9',
+              lineHeight: 1.75,
+              opacity: 0.55,
+              maxWidth: 400,
+              fontWeight: 300,
+            }}>
+              So music becomes easier to share and more meaningful to explore — without the friction of incompatible platforms.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
+            <a href="#" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '12px 24px',
+              background: '#7EB898',
+              color: '#fff',
+              fontFamily: 'var(--font-sans)',
+              fontSize: 13,
+              fontWeight: 500,
+              textDecoration: 'none',
+              borderRadius: 999,
+              opacity: 0.7,
+              cursor: 'default',
+            }}>Coming soon</a>
+          </div>
+        </div>
+
+        {/* What it solves */}
+        <div className="amp-product-side" style={{
+          background: 'var(--warm-white-2)',
+          borderRadius: 22,
+          padding: '36px 32px',
+          border: '1px solid rgba(45,75,110,0.07)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}>
+          <p style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 10,
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+            color: 'var(--midnight)',
+            opacity: 0.35,
+            marginBottom: 24,
+          }}>The pain it solves</p>
+          {[
+            { pain: 'You find a song on Spotify but your friend uses Apple Music', fix: 'Universal share link' },
+            { pain: 'Recommendations feel random, not personal', fix: 'Taste-aware discovery' },
+            { pain: 'Music context gets lost when you share a plain link', fix: 'Rich metadata per track' },
+            { pain: 'You lose track of music that actually meant something', fix: 'Meaningful music memory' },
+          ].map(({ pain, fix }) => (
+            <div key={fix} style={{ padding: '14px 0', borderBottom: '1px solid rgba(45,75,110,0.06)' }}>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 12,
+                color: 'var(--midnight)',
+                opacity: 0.5,
+                lineHeight: 1.5,
+                fontWeight: 300,
+                marginBottom: 5,
+              }}>{pain}</p>
+              <p style={{
+                display: 'inline-flex',
                 alignItems: 'center',
-                gap: 6,
-              }}>
-                <ArrowRight size={12} strokeWidth={2} /> {fix}
-              </p>
+                gap: 4,
+                fontFamily: 'var(--font-sans)',
+                fontSize: 11,
+                fontWeight: 500,
+                color: '#7EB898',
+                letterSpacing: '0.5px',
+              }}><ArrowRight size={12} strokeWidth={2} aria-hidden="true" /> {fix}</p>
             </div>
           ))}
         </div>
@@ -593,26 +700,16 @@ function Products() {
         justifyContent: 'space-between',
         background: 'rgba(45,75,110,0.02)',
       }}>
-        <div>
-          <p style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 16,
-            fontStyle: 'italic',
-            color: 'var(--midnight)',
-            opacity: 0.6,
-            marginBottom: 4,
-          }}>
-            More products in conception.
-          </p>
-          <p style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 12,
-            color: 'var(--midnight)',
-            opacity: 0.35,
-            fontWeight: 300,
-          }}>Every one starts with a real pain. Every one ships when it's ready.</p>
-        </div>
-        <Link href="https://lyceum.amplecen.com" style={{
+        <p style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 15,
+          fontStyle: 'italic',
+          color: 'var(--midnight)',
+          opacity: 0.5,
+        }}>
+          More products in conception — each one starting from a real, observed pain.
+        </p>
+        <a href="https://lyceum.amplecen.com" style={{
           fontFamily: 'var(--font-sans)',
           fontSize: 10,
           letterSpacing: '1.5px',
@@ -626,7 +723,7 @@ function Products() {
         }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '0.35')}
-        >Amplecen Lyceum ↗</Link>
+        >Amplecen Lyceum <ArrowUpRight size={12} strokeWidth={1.75} aria-hidden="true" /></a>
       </div>
     </section>
   )
@@ -661,7 +758,7 @@ function Team() {
               color: 'rgba(245,240,232,0.08)',
               userSelect: 'none',
               position: 'absolute',
-            }}>A</span>
+            }}>A.</span>
             <div style={{
               position: 'absolute',
               bottom: 0, left: 0, right: 0,
@@ -676,31 +773,31 @@ function Team() {
           <div style={{ paddingTop: 12 }}>
             <p style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(22px, 2.8vw, 30px)',
-              fontWeight: 500,
+              fontSize: 'clamp(20px, 2.5vw, 27px)',
+              fontWeight: 400,
               fontStyle: 'italic',
               color: 'var(--midnight)',
               lineHeight: 1.55,
               marginBottom: 28,
             }}>
-              "I kept noticing the same pattern — smart, motivated people losing hours every day to noise they never chose. So I started building the thing I wished existed."
+              "I kept seeing the same thing — capable people held back not by a lack of effort, but by tools that weren't built for how they actually live. So I started building differently."
             </p>
             <p style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 16,
+              fontSize: 15,
               color: 'var(--midnight)',
               opacity: 0.5,
               lineHeight: 1.75,
-              fontWeight: 400,
+              fontWeight: 300,
               maxWidth: 480,
               marginBottom: 32,
             }}>
-              Amplecen is a multi-product organization built around a single conviction: that the most valuable thing you can give someone in the age of distraction is their own clarity back.
+              Amplecen is a human-centered product studio built around one conviction: that software should support the person using it — their attention, their emotions, their real life — not just their task list.
             </p>
             <div className="amp-team-meta" style={{ display: 'flex', gap: 32 }}>
               {[
-                { label: 'Role', value: 'Engineering & Product' },
-                { label: 'Approach', value: 'Pain-first, product-second' },
+                { label: 'Role', value: 'Founder · Engineering & Product' },
+                { label: 'Approach', value: 'Human-centered, pain-first' },
                 { label: 'Stage', value: 'Pre-seed, founder-led' },
               ].map(({ label, value }) => (
                 <div key={label}>
@@ -710,6 +807,66 @@ function Team() {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Principles ─── */
+function Principles() {
+  const list = [
+    { label: 'Warm, not loud', desc: 'We don\'t shout for attention. Our products earn it.' },
+    { label: 'Helpful by default, controllable always', desc: 'Smart out of the box. Yours to adjust, always.' },
+    { label: 'Trust is a feature', desc: 'Privacy, transparency, and data boundaries are built in — not bolted on.' },
+    { label: 'Designed for real life', desc: 'Not ideal routines. Actual people, with actual inconsistency.' },
+    { label: 'Progress without pressure', desc: 'Sustainable beats intense. We design for the long run.' },
+  ]
+
+  return (
+    <section id="principles" className="amp-section" style={{ padding: '96px 64px', background: 'var(--warm-white-2)' }}>
+      <div style={{ maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 64 }}>
+          <span className="eyebrow">Principles</span>
+          <div style={{ flex: 1, height: 1, background: 'rgba(232,133,90,0.18)' }} />
+        </div>
+        <div className="amp-principles-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
+          {list.map(({ label, desc }, i) => (
+            <div key={label} style={{
+              padding: '28px 28px',
+              background: 'var(--warm-white)',
+              borderRadius: 16,
+              border: '1px solid rgba(45,75,110,0.06)',
+              transition: 'border-color 0.2s, transform 0.25s',
+              gridColumn: i === 4 ? '2' : undefined,
+            }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(232,133,90,0.2)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(45,75,110,0.06)'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
+            >
+              <p style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 17,
+                fontWeight: 400,
+                color: 'var(--midnight)',
+                lineHeight: 1.35,
+                marginBottom: 10,
+              }}>{label}</p>
+              <p style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: 13,
+                fontWeight: 300,
+                color: 'var(--midnight)',
+                opacity: 0.5,
+                lineHeight: 1.65,
+              }}>{desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -734,26 +891,26 @@ function Contact() {
           <div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(34px, 4vw, 50px)',
-              fontWeight: 600,
+              fontSize: 'clamp(30px, 3.5vw, 44px)',
+              fontWeight: 400,
               color: 'var(--midnight)',
-              lineHeight: 1.15,
-              letterSpacing: '-0.8px',
+              lineHeight: 1.2,
+              letterSpacing: '-0.5px',
               marginBottom: 20,
             }}>
-              Building something?<br />
-              <em style={{ color: 'var(--ember)' }}>Let's talk.</em>
+              Got something<br />
+              <em style={{ color: 'var(--ember)' }}>worth sharing?</em>
             </h2>
             <p style={{
-              fontSize: 16,
+              fontSize: 15,
               color: 'var(--midnight)',
               opacity: 0.5,
               lineHeight: 1.8,
-              fontWeight: 400,
+              fontWeight: 300,
               maxWidth: 360,
               marginBottom: 32,
             }}>
-              For early access to Rhythmé, partnerships, press, or if you've found a pain point you think we should know about.
+              For early access, press, partnerships, or if you've spotted a pain point you think we should know about — we read everything.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
@@ -761,7 +918,7 @@ function Contact() {
                 { label: 'Rhythmé early access', value: 'rhythme@amplecen.com' },
                 { label: 'Lyceum', value: 'lyceum.amplecen.com' },
               ].map(({ label, value }) => (
-                <div key={label} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <div key={label} className="amp-contact-item" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                   <span style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--ember)', opacity: 0.55, minWidth: 140 }}>{label}</span>
                   <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--midnight)', opacity: 0.55 }}>{value}</span>
                 </div>
@@ -859,15 +1016,15 @@ function Footer() {
         <span style={{ fontFamily: 'var(--font-display)', fontSize: 14, color: 'var(--midnight)', opacity: 0.5 }}>Amplecen</span>
       </div>
       <div className="amp-footer-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
-        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.25 }}>© 2025 Amplecen</span>
-        <Link href="/rhythme" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--ember)', opacity: 0.5, textDecoration: 'none', transition: 'opacity 0.2s' }}
+        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.25 }}>© 2025 Amplecen · Human-centered software.</span>
+        <a href="/rhythme" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--ember)', opacity: 0.5, textDecoration: 'none', transition: 'opacity 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
-        >Rhythmé ↗</Link>
-        <Link href="https://lyceum.amplecen.com" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3, textDecoration: 'none', transition: 'opacity 0.2s' }}
+        >Rhythmé <ArrowUpRight size={12} strokeWidth={1.75} aria-hidden="true" /></a>
+        <a href="https://lyceum.amplecen.com" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3, textDecoration: 'none', transition: 'opacity 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '0.3')}
-        >Lyceum ↗</Link>
+        >Lyceum <ArrowUpRight size={12} strokeWidth={1.75} aria-hidden="true" /></a>
       </div>
     </footer>
   )
@@ -885,6 +1042,8 @@ export default function Home() {
         <Divider />
         <Products />
         <Divider accent />
+        <Principles />
+        <Divider />
         <Team />
         <Divider />
         <Contact />
