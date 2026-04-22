@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.amplecen.com'), // ← This is critical
+  metadataBase: new URL('https://www.amplecen.com/'), // ← This is critical
   title: 'Rhythmé — Productivity that knows how you feel',
   description:
     'Rhythmé unifies your tasks, habits, and mood into one calm space — so you spend less time managing your system and more time actually doing the work.',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://www.amplecen.com/rhythme',
+    url: 'https://www.amplecen.com/rhythme/',
     siteName: 'Amplecen',
     title: 'Rhythmé — Productivity that knows how you feel',
     description:
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   alternates: {
-    canonical: 'https://www.amplecen.com/rhythme', // ← This fixes the duplicate error
+    canonical: 'https://www.amplecen.com/rhythme/', // ← This fixes the duplicate error
   },
 }
 
@@ -47,7 +47,7 @@ const jsonLd = {
   name: 'Rhythmé',
   applicationCategory: 'ProductivityApplication',
   operatingSystem: 'Web',
-  url: 'https://www.amplecen.com/rhythme',
+  url: 'https://www.amplecen.com/rhythme/',
   description:
     'A premium productivity platform that unifies tasks, habits, mood tracking, journaling, and focus sessions into one calm dashboard.',
   offers: {
@@ -59,7 +59,7 @@ const jsonLd = {
   creator: {
     '@type': 'Organization',
     name: 'Amplecen',
-    url: 'https://www.amplecen.com',
+    url: 'https://www.amplecen.com/',
   },
 }
 

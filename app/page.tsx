@@ -75,7 +75,7 @@ function Nav() {
             }}
           >{item}</a>
         ))}
-        <a href="/rhythme" style={{
+        <a href="https://www.amplecen.com/rhythme/" style={{
           fontFamily: 'var(--font-sans)',
           fontSize: 13,
           fontWeight: 500,
@@ -468,7 +468,7 @@ function Products() {
           </div>
 
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
-            <a href="/rhythme" style={{
+            <a href="https://www.amplecen.com/rhythme/" style={{
               display: 'inline-flex',
               alignItems: 'center',
               gap: 8,
@@ -710,7 +710,7 @@ function Products() {
         }}>
           More products in conception — each one starting from a real, observed pain.
         </p>
-        <a href="https://lyceum.amplecen.com" style={{
+        <a href="https://lyceum.amplecen.com/" style={{
           fontFamily: 'var(--font-sans)',
           fontSize: 10,
           letterSpacing: '1.5px',
@@ -1049,11 +1049,11 @@ function Footer() {
       </div>
       <div className="amp-footer-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
         <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.25 }}>© 2025 Amplecen · Human-centered software.</span>
-        <a href="/rhythme" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--ember)', opacity: 0.5, textDecoration: 'none', transition: 'opacity 0.2s' }}
+        <a href="https://www.amplecen.com/rhythme/" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--ember)', opacity: 0.5, textDecoration: 'none', transition: 'opacity 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
         >Rhythmé <ArrowUpRight size={12} strokeWidth={1.75} aria-hidden="true" /></a>
-        <a href="https://lyceum.amplecen.com" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3, textDecoration: 'none', transition: 'opacity 0.2s' }}
+        <a href="https://lyceum.amplecen.com/" style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--midnight)', opacity: 0.3, textDecoration: 'none', transition: 'opacity 0.2s' }}
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '0.3')}
         >Lyceum <ArrowUpRight size={12} strokeWidth={1.75} aria-hidden="true" /></a>

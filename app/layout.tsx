@@ -3,7 +3,7 @@ import { fraunces, dmSans, dmMono, dmSerifDisplay } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.amplecen.com"), // ← Primary domain
+  metadataBase: new URL("https://www.amplecen.com/"), // ← Primary domain
   title: {
     default: "Amplecen",
     template: "%s · Amplecen",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.amplecen.com",
+    url: "https://www.amplecen.com/",
     siteName: "Amplecen",
     title: "Amplecen — Human behavior. Broad reach.",
     description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   alternates: {
-    canonical: "https://www.amplecen.com", // ← Homepage canonical
+    canonical: "https://www.amplecen.com/", // ← Homepage canonical
   },
 };
 
@@ -71,13 +71,13 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Amplecen",
-              url: "https://www.amplecen.com",
+              url: "https://www.amplecen.com/",
               description:
                 "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
               foundingDate: "2025",
               sameAs: [
-                "https://twitter.com/amplecen",
-                "https://linkedin.com/company/amplecen",
+                "https://twitter.com/amplecen/",
+                "https://linkedin.com/company/amplecen/",
               ],
             }),
           }}
@@ -91,7 +91,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "Amplecen",
-              url: "https://www.amplecen.com",
+              url: "https://www.amplecen.com/",
             }),
           }}
         />

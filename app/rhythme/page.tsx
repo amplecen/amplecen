@@ -126,7 +126,7 @@ function RhythmeNav() {
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
       }}>
-        <a href="/rhythme" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+        <a href="/rhythme/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
           <span style={{ fontFamily: V('font-display'), fontSize: 20, color: V('text'), letterSpacing: '-0.3px' }}>Rhythmé</span>
         </a>
 
@@ -177,7 +177,7 @@ function RhythmeNav() {
               textDecoration: 'none', opacity: 0.8,
             }}>{l.label}</a>
           ))}
-          <a href="https://rhythme.amplecen.com" onClick={() => setMobileOpen(false)} style={{
+          <a href="https://rhythme.amplecen.com/" onClick={() => setMobileOpen(false)} style={{
             fontFamily: V('font-display'), fontSize: 28, color: V('accent'),
             textDecoration: 'none',
           }}>Launch Rhythmé ↗</a>
@@ -615,7 +615,7 @@ function LaunchButton() {
 
   return (
     <a
-      href="https://rhythme.amplecen.com"
+      href="https://rhythme.amplecen.com/"
       className="rl-launch-btn"
       style={{
         position: 'fixed', bottom: 32, right: 32, zIndex: 90,
