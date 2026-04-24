@@ -5,11 +5,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.amplecen.com/"), // ← Primary domain
   title: {
-    default: "Amplecen",
+    default: "Amplecen — Human-Centered Product Studio for Focus, Emotion & Productivity",
     template: "%s · Amplecen",
   },
-  description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness. Discover Rhythmé and products that help you reclaim focus in a distracted world.",
-  keywords: ["focus tools", "productivity", "human behavior", "Rhythmé", "Amplecen", "deep work", "attention recovery", "distraction free"],
+  description: "Amplecen is a human-centered product studio building tools that improve focus, emotional balance, and meaningful digital experiences through behavioral insight.",
+  keywords: ["human-centered design", "product studio", "behavioral insights", "Rhythmé", "Amplecen", "deep work", "attention recovery", "distraction free"],
   authors: [{ name: "Amplecen" }],
   creator: "Amplecen",
 
@@ -18,15 +18,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.amplecen.com/",
     siteName: "Amplecen",
-    title: "Amplecen — Human behavior. Broad reach.",
-    description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
+    title: "Amplecen — Human-Centered Product Studio for Focus, Emotion & Productivity",
+    description: "Amplecen is a human-centered product studio building tools that improve focus, emotional balance, and meaningful digital experiences through behavioral insight.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Amplecen" }],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Amplecen — Human behavior. Broad reach.",
-    description: "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
+    title: "Amplecen — Human-Centered Product Studio for Focus, Emotion & Productivity",
+    description: "Amplecen is a human-centered product studio building tools that improve focus, emotional balance, and meaningful digital experiences through behavioral insight.",
     images: ["/og-image.png"],
   },
 
@@ -73,7 +73,7 @@ export default function RootLayout({
               name: "Amplecen",
               url: "https://www.amplecen.com/",
               description:
-                "Building tools at the intersection of human behavior, intelligence, and emotional awareness.",
+                "Amplecen is a human-centered product studio building tools that improve focus, emotional balance, and meaningful digital experiences through behavioral insight.",
               foundingDate: "2025",
               sameAs: [
                 "https://twitter.com/amplecen/",
